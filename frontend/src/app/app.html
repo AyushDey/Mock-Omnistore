@@ -1,0 +1,1124 @@
+<div class="pos-container">
+  <!-- Dynamic Toast Notifications -->
+  <div class="toast-container">
+    @for (toast of toasts(); track toast.id) {
+      <div class="toast" [class]="toast.type">
+        <span class="toast-icon">
+          @if (toast.type === 'success') {
+            <svg viewBox="0 0 24 24" class="toast-icon-svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          } @else if (toast.type === 'error') {
+            <svg viewBox="0 0 24 24" class="toast-icon-svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+          } @else {
+            <svg viewBox="0 0 24 24" class="toast-icon-svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+          }
+        </span>
+        <div class="toast-content">{{ toast.message }}</div>
+      </div>
+    }
+  </div>
+
+  <!-- HEADER -->
+  <header class="lm-header">
+    <div class="header-left">
+      <!-- Leroy Merlin Brand SVG Logo -->
+      <div class="lm-logo">
+        <svg viewBox="0 0 100 100" class="logo-svg">
+          <polygon points="50,10 90,90 10,90" fill="#84bd00"/>
+          <polygon points="50,30 75,80 25,80" fill="#ffffff"/>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-name">LEROY MERLIN</span>
+          <span class="brand-desc">Magasin - Boé - Agen</span>
+          <span class="brand-time">{{ currentTime() | date:'dd/MM/yyyy | HH:mm:ss' }}</span>
+          <span class="brand-till">Caisse: {{ '51' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div class="printer-status" (click)="reimprimerTicket()">
+        <span class="printer-label">IMPRIMANTE</span>
+        <svg viewBox="0 0 24 24" class="header-icon printer-icon">
+          <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z" fill="#005c5c"/>
+        </svg>
+      </div>
+      
+      <div class="cashier-info" (click)="openClientLookup()">
+        <div class="cashier-details">
+          <span class="cashier-title">CHEF DE SECTEUR</span>
+          <span class="cashier-name">{{ selectedCustomer() ? selectedCustomer().name : customerName() }}</span>
+        </div>
+        <div class="avatar-circle">
+          <svg viewBox="0 0 24 24" class="avatar-svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" fill="#ffffff"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="menu-brand">
+        <div class="menu-btn">
+          <span class="menu-logo-triangle"></span>
+          <span class="menu-text">MENU</span>
+          <span class="menu-dots">:::</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SCREEN A SEARCH & TABS BAR (Image 2 Only) -->
+  @if (!isPaymentScreen()) {
+    <div class="scanner-search-row animate-fade">
+      <form class="search-form" (submit)="activeTab() === 'TRANSACTION_LOOKUP' ? submitTransactionLookup($event) : onSearchSubmit($event)">
+        <div class="search-bar-wrapper">
+          <input 
+            type="text" 
+            class="barcode-input" 
+            [placeholder]="activeTab() === 'TRANSACTION_LOOKUP' ? 'Scan Or Enter Transaction ID' : 'Scannez ou saisissez le code barre de l\'article'"
+            [(ngModel)]="searchQuery"
+            name="searchQuery"
+            (input)="activeTab() === 'TRANSACTION_LOOKUP' ? null : onSearchInput()"
+            autocomplete="off"
+          />
+          @if (searchQuery()) {
+            <span class="clear-btn" (click)="searchQuery.set(''); showSearchDropdown.set(false)">×</span>
+          }
+          <button type="submit" class="search-submit-btn">
+            <svg viewBox="0 0 24 24" class="search-svg">
+              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#ffffff"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Autocomplete dropdown suggestion box -->
+        @if (showSearchDropdown() && searchResults().length > 0) {
+          <div class="search-dropdown shadow-lg">
+            @for (product of searchResults(); track product.id) {
+              <div class="dropdown-item" (click)="addCatalogProduct(product)">
+                <span class="item-name">{{ product.name }}</span>
+                <span class="item-details">{{ product.barcode }} - <strong>{{ product.price | number:'1.2-2' }} €</strong></span>
+              </div>
+            }
+          </div>
+        }
+      </form>
+
+      <!-- Action Category Tabs -->
+      <div class="action-tabs">
+        <button class="tab-btn" [class.active]="activeModal() === 'CLIENT'" (click)="openClientLookup()">
+          <svg viewBox="0 0 24 24" class="tab-svg">
+            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#005c5c"/>
+            <path d="M9.5 5.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z" fill="#005c5c"/>
+          </svg>
+          <span>CLIENT</span>
+        </button>
+        <button class="tab-btn" [class.active]="activeTab() === 'ARTICLE_LOOKUP'" (click)="selectTab('ARTICLE_LOOKUP')">
+          <svg viewBox="0 0 24 24" class="tab-svg">
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" fill="#005c5c"/>
+          </svg>
+          <span>ARTICLE / PRIX</span>
+        </button>
+        <button class="tab-btn" [class.active]="activeTab() === 'TRANSACTION_LOOKUP'" (click)="selectTab('TRANSACTION_LOOKUP')">
+          <svg viewBox="0 0 24 24" class="tab-svg">
+            <path d="M22 9V7h-2V5c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2v-2h-2V9h2zm-4 10H4V5h14v14zM6 13h5v2H6zm0-4h10v2H6zm0 8h10v2H6z" fill="#ffffff"/>
+          </svg>
+          <span>TRANSACTION</span>
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- MAIN BODY LAYOUT -->
+  <main class="lm-main-layout" [class.payment-view-mode]="isPaymentScreen()">
+    
+    <!-- LEFT PANEL: SHOPPING CART / SEARCH RESULTS / LAST TRANSACTION -->
+    <section class="cart-section">
+      <div class="cart-header">
+        @if (activeTab() === 'CART') {
+          <span class="cart-title">ARTICLES DU PANIER</span>
+          <span class="cart-badge">{{ transactionService.cartItems().length }}</span>
+        } @else if (activeTab() === 'ARTICLE_LOOKUP') {
+          <span class="cart-title">RECHERCHE D'ARTICLES</span>
+        } @else if (activeTab() === 'TRANSACTION_LOOKUP') {
+          <span class="cart-title">DERNIÈRE TRANSACTION</span>
+        }
+      </div>
+
+      <div class="cart-items-container">
+        @if (activeTab() === 'CART') {
+          <!-- Standard Cart items list -->
+          @if (transactionService.cartItems().length === 0) {
+            <div class="empty-cart">
+              <svg viewBox="0 0 24 24" class="empty-cart-svg">
+                <path d="M17.21 9l-4.38-6.56c-.18-.27-.51-.34-.78-.16-.27.18-.34.51-.16.78L15.94 9H4c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-9c0-1.1-.9-2-2-2h-2.79zM12 20c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3-11H9l3-4.5L15 9z" fill="#bdc3c7"/>
+              </svg>
+              <p>Le panier est vide</p>
+              <span>Scannez un code barre ou cherchez des articles pour commencer.</span>
+            </div>
+          } @else {
+            @for (item of transactionService.cartItems(); track item.id) {
+              <div class="cart-item-card animate-fade">
+                <div class="item-img-col">
+                  <div class="item-placeholder-img">
+                    @if (item.product.name.includes('MEULEUSE')) {
+                      🔧
+                    } @else if (item.product.name.includes('BARQUETTES')) {
+                      📦
+                    } @else {
+                      🔨
+                    }
+                  </div>
+                </div>
+                
+                <div class="item-details-col">
+                  <h4 class="item-name">{{ item.product.name }}</h4>
+                  <div class="item-sub-meta">
+                    <span class="item-barcode">{{ item.product.barcode }}</span>
+                    <span class="status-circle-green"></span>
+                  </div>
+                </div>
+
+                <div class="item-price-qty-col">
+                  <div class="item-price">{{ (item.product.price * item.quantity) | number:'1.2-2' }} €</div>
+                  <div class="item-qty-adjust">
+                    <button class="qty-btn" (click)="decrementQty(item)">−</button>
+                    <span class="qty-display">Qté {{ item.quantity }}</span>
+                    <button class="qty-btn" (click)="incrementQty(item)">+</button>
+                    <button class="item-delete-btn" (click)="removeItem(item)">
+                      ×
+                    </button>
+                  </div>
+                </div>
+              </div>
+            }
+          }
+        } @else if (activeTab() === 'ARTICLE_LOOKUP') {
+          <!-- ARTICLE LOOKUP LEFT PANEL -->
+          @if (!lookupSearched() || lookupResults().length === 0) {
+            <!-- Centered Magnifier Placeholder as in new screenshot -->
+            <div class="lookup-placeholder animate-fade">
+              <div class="lookup-box-art">
+                <svg viewBox="0 0 200 200" class="lookup-svg-art">
+                  <path d="M100 40 L160 70 L160 130 L100 160 L40 130 L40 70 Z" fill="none" stroke="#cbd5e1" stroke-width="4" stroke-dasharray="6,6"/>
+                  <path d="M100 40 L100 160" fill="none" stroke="#f1f5f9" stroke-width="2"/>
+                  <circle cx="95" cy="95" r="30" fill="none" stroke="#94a3b8" stroke-width="6"/>
+                  <line x1="116" y1="116" x2="145" y2="145" stroke="#94a3b8" stroke-width="8" stroke-linecap="round"/>
+                  <path d="M60 80 L75 80 M67 72 L67 88" fill="none" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M125 125 L140 125 M132 117 L132 133" fill="none" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h2 class="placeholder-title">Pour voir votre article</h2>
+              <p class="placeholder-desc">Remplissez les champs du formulaire situé à droite</p>
+            </div>
+          } @else {
+            <!-- List matched items -->
+            <div class="lookup-results-list animate-fade">
+              @for (product of lookupResults(); track product.id) {
+                <div class="cart-item-card lookup-item-card">
+                  <div class="item-img-col">
+                    <div class="item-placeholder-img">
+                      @if (product.name.includes('MEULEUSE')) { 🔧 }
+                      @else if (product.name.includes('BARQUETTES')) { 📦 }
+                      @else { 🔨 }
+                    </div>
+                  </div>
+                  <div class="item-details-col">
+                    <h4 class="item-name">{{ product.name }}</h4>
+                    <div class="item-sub-meta">
+                      <span class="item-barcode">{{ product.barcode }}</span>
+                      <span class="status-circle-green"></span>
+                    </div>
+                  </div>
+                  <div class="item-price-qty-col">
+                    <div class="item-price">{{ product.price | number:'1.2-2' }} €</div>
+                    <button class="footer-btn payer-btn add-lookup-item-btn" (click)="addLookupItemToCart(product)">
+                      <span>AJOUTER</span>
+                      <svg viewBox="0 0 24 24" class="add-cart-mini"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="#ffffff"/></svg>
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        } @else if (activeTab() === 'TRANSACTION_LOOKUP') {
+          <!-- TRANSACTION LOOKUP LEFT PANEL: LAST TRANSACTION DETAILS CARD -->
+          @if (!lookupTxResult()) {
+            <div class="empty-cart">
+              <svg viewBox="0 0 24 24" class="empty-cart-svg">
+                <path d="M22 9V7h-2V5c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2v-2h-2V9h2zm-4 10H4V5h14v14zM6 13h5v2H6zm0-4h10v2H6zm0 8h10v2H6z" fill="#bdc3c7"/>
+              </svg>
+              <p>Aucune transaction sélectionnée</p>
+              <span>Utilisez les filtres à droite pour rechercher et afficher une transaction.</span>
+            </div>
+          } @else {
+            <div class="last-transaction-card animate-fade">
+              <!-- Dropdown Selector when multiple transactions are found -->
+              @if (lookupTxResults().length > 1) {
+                <div class="tx-results-selector-wrapper">
+                  <label class="selector-label">Sélectionner une transaction ({{ lookupTxResults().length }} trouvées) :</label>
+                  <select class="form-select tx-selector-dropdown" [ngModel]="lookupTxResult()?.id" (ngModelChange)="onLookupTxSelect($event)">
+                    @for (tx of lookupTxResults(); track tx.id) {
+                      <option [value]="tx.id">
+                        ID: {{ tx.id.substring(0, 8).toUpperCase() }} - {{ tx.createdAt | date:'dd/MM HH:mm' }} - {{ tx.totalAmount | number:'1.2-2' }} € ({{ tx.status }})
+                      </option>
+                    }
+                  </select>
+                </div>
+              }
+
+              <!-- Collapsible Sub-tabs -->
+              <div class="sub-tab-btn-group">
+                <button class="sub-tab-btn" [class.active]="transactionLookupSubTab() === 'INFO'" (click)="transactionLookupSubTab.set('INFO')">
+                  TRANSACTION INFO
+                </button>
+                <button class="sub-tab-btn" [class.active]="transactionLookupSubTab() === 'ITEMS'" (click)="transactionLookupSubTab.set('ITEMS')">
+                  ARTICLES ({{ lookupTxResult().items.length }})
+                </button>
+              </div>
+
+              <div class="sub-tab-content">
+                @if (transactionLookupSubTab() === 'INFO') {
+                  <div class="tx-info-content animate-fade">
+                    <div class="info-row">
+                      <span class="info-label">Ticket ID:</span>
+                      <strong class="info-val">{{ lookupTxResult().id }}</strong>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Date / Heure:</span>
+                      <span class="info-val">{{ lookupTxResult().createdAt | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Statut:</span>
+                      <span class="info-val status-badge" [class]="lookupTxResult().status.toLowerCase()">
+                        {{ lookupTxResult().status }}
+                      </span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Montant Total:</span>
+                      <strong class="info-val highlight-total">{{ lookupTxResult().totalAmount | number:'1.2-2' }} €</strong>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Dont Taxe (TVA):</span>
+                      <span class="info-val">{{ lookupTxResult().taxAmount | number:'1.2-2' }} €</span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Facture Demandée:</span>
+                      <span class="info-val">{{ lookupTxResult().invoiceRequired ? 'OUI' : 'NON' }}</span>
+                    </div>
+
+                    @if (lookupTxResult().payments && lookupTxResult().payments.length > 0) {
+                      <div class="payments-box">
+                        <div class="payments-title">DÉTAIL DES RÈGLEMENTS</div>
+                        @for (pay of lookupTxResult().payments; track pay.id) {
+                          <div class="pay-row">
+                            <span class="pay-method">💰 {{ pay.method }}</span>
+                            <strong class="pay-amount">{{ pay.amount | number:'1.2-2' }} €</strong>
+                          </div>
+                        }
+                      </div>
+                    }
+                  </div>
+                } @else {
+                  <div class="tx-items-content animate-fade">
+                    <table class="tx-items-table">
+                      <thead>
+                        <tr>
+                          <th>Description</th>
+                          <th class="text-center">Qté</th>
+                          <th class="text-right">P.U.</th>
+                          <th class="text-right">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (item of lookupTxResult().items; track item.id) {
+                          <tr>
+                            <td>
+                              <div class="item-name">{{ item.product.name }}</div>
+                              <div class="item-barcode">{{ item.product.barcode }}</div>
+                            </td>
+                            <td class="text-center">{{ item.quantity }}</td>
+                            <td class="text-right">{{ item.price | number:'1.2-2' }} €</td>
+                            <td class="text-right">{{ (item.price * item.quantity) | number:'1.2-2' }} €</td>
+                          </tr>
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                }
+              </div>
+
+              <!-- Collapsible actions footer -->
+              <div class="tx-void-actions-footer">
+                <button class="void-action-btn replace" (click)="showToast('Post Void & Remplacer initié', 'warning')">
+                  POST VOID REPLACE
+                </button>
+                <button class="void-action-btn void" (click)="showToast('Post Void de la transaction exécuté', 'error')">
+                  POST VOID
+                </button>
+                <button class="void-action-btn reprint" (click)="printedDocType.set('RECEIPT'); lastCompletedTransaction.set(lookupTxResult()); activeModal.set('DOCUMENT')">
+                  REPRINT
+                </button>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: ACTION BUTTON PANEL -->
+    <section class="action-section">
+      
+      <!-- SCREEN A: TRANSACTION FUNCTIONS (Image 2) -->
+      @if (!isPaymentScreen()) {
+        @if (activeTab() === 'CART') {
+          <div class="panel-card animate-fade">
+            <h3 class="panel-header">FONCTIONS</h3>
+
+            <div class="button-grid-group animate-fade">
+              <!-- Acte de vente -->
+              <div class="grid-section">
+                <span class="grid-section-title">Acte de vente</span>
+                <div class="grid-buttons">
+                  <button class="action-btn active-btn" (click)="bulletinDeVente()">
+                    <svg viewBox="0 0 24 24" class="btn-svg"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" fill="#ffffff"/></svg>
+                    <span>BULLETIN DE VENTE</span>
+                  </button>
+                  <button class="action-btn active-btn" (click)="bonDeCommande()">
+                    <svg viewBox="0 0 24 24" class="btn-svg"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" fill="#ffffff"/></svg>
+                    <span>BON DE COMMANDE</span>
+                  </button>
+                  <button class="action-btn active-btn" (click)="codeA4Chiffres()">
+                    <svg viewBox="0 0 24 24" class="btn-svg"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" fill="#ffffff"/></svg>
+                    <span>CODE À 4 CHIFFRES</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Agir sur le panier -->
+              <div class="grid-section">
+                <span class="grid-section-title">Agir sur le panier</span>
+                <div class="grid-buttons">
+                  <button class="action-btn active-btn" [disabled]="transactionService.cartItems().length === 0" (click)="suspendreTransaction()">
+                    <svg viewBox="0 0 24 24" class="btn-svg"><path d="M9 16h2V8H9v8zm4 0h2V8h-2v8zm-1-14C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#ffffff"/></svg>
+                    <span>SUSPENDRE</span>
+                  </button>
+                  <button class="action-btn active-btn" (click)="reprendreTransaction()">
+                    <svg viewBox="0 0 24 24" class="btn-svg"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="#ffffff"/></svg>
+                    <span>REPRENDRE</span>
+                  </button>
+                  <button class="action-btn active-btn" [disabled]="transactionService.cartItems().length === 0" (click)="abandonnerTransaction()">
+                    <svg viewBox="0 0 24 24" class="btn-svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z" fill="#ffffff"/></svg>
+                    <span>ABANDONNER</span>
+                  </button>
+                  <button class="action-btn" [class.active-btn]="lastCompletedTransaction() !== null" [disabled]="lastCompletedTransaction() === null" (click)="reimprimerTicket()">
+                    <svg viewBox="0 0 24 24" class="btn-svg"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z" fill="#ffffff"/></svg>
+                    <span>RÉIMPRESSION</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Autres -->
+              <div class="grid-section">
+                <span class="grid-section-title">Autres</span>
+                <div class="grid-buttons">
+                  <button class="action-btn active-btn" (click)="clickPayGiftCard()">
+                    <svg viewBox="0 0 24 24" class="btn-svg"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z" fill="#ffffff"/></svg>
+                    <span>CARTE-CADEAU</span>
+                  </button>
+                  <button class="action-btn" [disabled]="!managerAuthorized()">
+                    <svg viewBox="0 0 24 24" class="btn-svg"><path d="M4 10h3v7H4zm6.5 0h3v7h-3zM2 22h19v-3H2zm15-12h3v7h-3zM11.5 1L2 6v2h19V6L11.5 1z" fill="#ffffff"/></svg>
+                    <span>VERSEMENT SUR COMPTE</span>
+                  </button>
+                  <button class="action-btn" [disabled]="!managerAuthorized()">
+                    <svg viewBox="0 0 24 24" class="btn-svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z" fill="#ffffff"/></svg>
+                    <span>REMBOURSEMENT D'ACOMPTE</span>
+                  </button>
+                  <button class="action-btn" [disabled]="!managerAuthorized()">
+                    <svg viewBox="0 0 24 24" class="btn-svg"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" fill="#ffffff"/></svg>
+                    <span>CLÔTURE DOSSIER CAUTION</span>
+                  </button>
+                  <button class="action-btn" [disabled]="!managerAuthorized()">
+                    <svg viewBox="0 0 24 24" class="btn-svg"><path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#ffffff"/></svg>
+                    <span>CRÉATION DOSSIER CAUTION</span>
+                  </button>
+                  <button class="action-btn" [disabled]="!managerAuthorized()">
+                    <svg viewBox="0 0 24 24" class="btn-svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z" fill="#ffffff"/></svg>
+                    <span>REMBOURSEMENT BON ACHAT</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        } @else if (activeTab() === 'ARTICLE_LOOKUP') {
+          <!-- SCREEN C: RECHERCHE ARTICLE FORM (New Screenshot) -->
+          <div class="panel-card animate-fade lookup-form-panel">
+            <h3 class="panel-header">RECHERCHE - ARTICLE</h3>
+            
+            <form class="lookup-search-form" (submit)="submitLookupSearch($event)">
+              <div class="form-group">
+                <label class="form-label">Code d'article</label>
+                <input 
+                  type="text" 
+                  class="form-input" 
+                  [(ngModel)]="lookupCode"
+                  name="lookupCode"
+                  placeholder="Saisissez le code"
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Description</label>
+                <input 
+                  type="text" 
+                  class="form-input" 
+                  [(ngModel)]="lookupDescription"
+                  name="lookupDescription"
+                  placeholder="Saisissez la désignation"
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Rayon</label>
+                <select class="form-select" [(ngModel)]="lookupRayon" name="lookupRayon">
+                  <option value="">Sélectionner</option>
+                  <option value="OUTILLAGE">Outillage</option>
+                  <option value="ELECTRICITE">Électricité</option>
+                  <option value="QUINCAILLERIE">Quincaillerie</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Sous-Rayon</label>
+                <select class="form-select" [(ngModel)]="lookupSubRayon" name="lookupSubRayon" [disabled]="!lookupRayon()">
+                  <option value="">Sélectionner</option>
+                  <option value="TOURNEVIS">Tournevis & clés</option>
+                  <option value="FIXATIONS">Fixations & vis</option>
+                  <option value="MATERIEL">Outillage électroportatif</option>
+                </select>
+              </div>
+
+              <div class="form-group price-slider-group">
+                <label class="form-label">Gamme De Prix</label>
+                <div class="slider-wrapper-a">
+                  <input 
+                    type="range" 
+                    class="price-slider-input" 
+                    min="0" 
+                    max="1000" 
+                    [ngModel]="lookupMaxPrice()"
+                    (ngModelChange)="lookupMaxPrice.set(parseFloat($event))"
+                    name="lookupMaxPrice"
+                  />
+                  <div class="slider-metrics">
+                    <span class="slider-min">€0</span>
+                    <span class="slider-current-val">{{ lookupMaxPrice() | number:'1.2-2' }} €</span>
+                    <span class="slider-max">€1000.00</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        } @else if (activeTab() === 'TRANSACTION_LOOKUP') {
+          <!-- BRAND NEW TRANSACTION LOOKUP FORM CARD -->
+          <div class="panel-card animate-fade lookup-form-panel">
+            <h3 class="panel-header">RECHERCHE - TRANSACTION</h3>
+            
+            <form class="lookup-search-form" (submit)="submitTransactionLookup($event)">
+              <div class="form-group inline-checkbox-group">
+                <label class="switch-container">
+                  <input type="checkbox" [(ngModel)]="lookupTxNonOmnistore" name="lookupTxNonOmnistore" />
+                  <span class="custom-checkbox"></span>
+                  <span class="switch-label-text">Transactions Non Omnistore</span>
+                </label>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Code barre / Article</label>
+                <input 
+                  type="text" 
+                  class="form-input" 
+                  [(ngModel)]="lookupTxBarcode"
+                  name="lookupTxBarcode"
+                  placeholder="Saisissez un code barre ou nom"
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">ID de transaction / Commande</label>
+                <input 
+                  type="text" 
+                  class="form-input" 
+                  [(ngModel)]="lookupTxOrderId"
+                  name="lookupTxOrderId"
+                  placeholder="Saisissez l'ID"
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Numéro de téléphone client</label>
+                <input 
+                  type="text" 
+                  class="form-input" 
+                  [(ngModel)]="lookupTxPhone"
+                  name="lookupTxPhone"
+                  placeholder="Saisissez le téléphone"
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="form-group date-picker-group">
+                <label class="form-label">Période de recherche</label>
+                <div class="date-inputs-row">
+                  <div class="date-input-wrapper">
+                    <input type="date" class="form-input date-input" [(ngModel)]="lookupTxStartDate" name="lookupTxStartDate" />
+                  </div>
+                  <span class="date-sep">au</span>
+                  <div class="date-input-wrapper">
+                    <input type="date" class="form-input date-input" [(ngModel)]="lookupTxEndDate" name="lookupTxEndDate" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group price-range-group">
+                <label class="form-label">Fourchette de montant (€)</label>
+                <div class="range-inputs-row">
+                  <input type="number" class="form-input number-input" [(ngModel)]="lookupTxMinAmount" name="lookupTxMinAmount" placeholder="Min" />
+                  <span class="range-sep">-</span>
+                  <input type="number" class="form-input number-input" [(ngModel)]="lookupTxMaxAmount" name="lookupTxMaxAmount" placeholder="Max" />
+                </div>
+              </div>
+            </form>
+          </div>
+        }
+      }
+      
+      <!-- SCREEN B: PAYMENT SELECTION (Image 1) -->
+      @else {
+        <div class="panel-card animate-fade">
+          <h3 class="panel-header">SÉLECTIONNER LES MOYENS DE PAIEMENT</h3>
+
+          <div class="button-grid-group">
+            <!-- Moyen de paiement standard -->
+            <div class="grid-section">
+              <span class="grid-section-title">Moyens de paiement standard</span>
+              <div class="grid-buttons">
+                <!-- Cash Button (Grey card in screenshot) -->
+                <button class="action-btn cash-btn" (click)="clickPayByCash()">
+                  <svg viewBox="0 0 24 24" class="btn-svg"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" fill="#7f8c8d"/></svg>
+                  <span>ESPÈCES</span>
+                </button>
+                <button class="action-btn active-btn" (click)="clickPayByCard()">
+                  <svg viewBox="0 0 24 24" class="btn-svg"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z" fill="#ffffff"/></svg>
+                  <span>CARTE</span>
+                </button>
+                <button class="action-btn active-btn" (click)="clickPayByOney()">
+                  <svg viewBox="0 0 24 24" class="btn-svg"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z" fill="#ffffff"/></svg>
+                  <span>CARTE ONEY</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Cartes cadeaux et bons -->
+            <div class="grid-section">
+              <span class="grid-section-title">Cartes cadeaux et bons</span>
+              <div class="grid-buttons">
+                <button class="action-btn active-btn" (click)="clickPayVoucher()">
+                  <svg viewBox="0 0 24 24" class="btn-svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-1 9h-6v-2h6v2zm0-4h-6V7h6v2z" fill="#ffffff"/></svg>
+                  <span>BON D'ACHAT</span>
+                </button>
+                <button class="action-btn active-btn" (click)="clickPayGiftCard()">
+                  <svg viewBox="0 0 24 24" class="btn-svg"><path d="M2 8h20v2H2zm0 4h20v2H2z" fill="#ffffff"/></svg>
+                  <span>CARTE CADEAU</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Autres -->
+            <div class="grid-section">
+              <span class="grid-section-title">Autres</span>
+              <div class="grid-buttons">
+                <button class="action-btn active-btn" (click)="clickPayGenericOther()">
+                  <svg viewBox="0 0 24 24" class="btn-svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z" fill="#ffffff"/></svg>
+                  <span>AUTRES MOYENS DE PAIEMENT</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total display & Invoice toggler -->
+          <div class="payment-summary-box">
+            <div class="due-amount-row">
+              <span class="due-label">MONTANT DÛ</span>
+              <span class="due-val">{{ transactionService.amountDue() | number:'1.2-2' }} €</span>
+            </div>
+
+            <div class="invoice-toggle-row">
+              <label class="switch">
+                <input 
+                  type="checkbox" 
+                  [checked]="transactionService.invoiceRequired()" 
+                  (change)="toggleInvoice($event)"
+                />
+                <span class="slider"></span>
+              </label>
+              <span class="switch-label">Editer une facture</span>
+            </div>
+          </div>
+        </div>
+      }
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="lm-footer" [class.lookup-footer-mode]="activeTab() !== 'CART' && !isPaymentScreen()">
+    @if (activeTab() === 'CART' || isPaymentScreen()) {
+      <div class="footer-left animate-fade">
+        <div class="footer-metric">
+          <span class="metric-label">REMISE</span>
+          <span class="metric-val">0,00 €</span>
+        </div>
+        <div class="footer-divider"></div>
+        
+        <div class="footer-metric">
+          <span class="metric-label">ÉCONOMIES</span>
+          <span class="metric-val">0,00 €</span>
+        </div>
+        <div class="footer-divider"></div>
+        
+        <div class="footer-metric">
+          <span class="metric-label">TVA</span>
+          <span class="metric-val">{{ transactionService.taxAmount() | number:'1.2-2' }} €</span>
+        </div>
+        <div class="footer-divider"></div>
+  
+        @if (!isPaymentScreen()) {
+          <!-- Screen A has SOUS-TOTAL -->
+          <div class="footer-metric animate-fade">
+            <span class="metric-label">SOUS-TOTAL</span>
+            <span class="metric-val">{{ transactionService.totalAmount() | number:'1.2-2' }} €</span>
+          </div>
+          <div class="footer-divider"></div>
+        }
+        
+        <div class="footer-metric total-metric">
+          <span class="metric-label">MONTANT TOTAL</span>
+          <span class="metric-val highlight-total">{{ transactionService.totalAmount() | number:'1.2-2' }} €</span>
+        </div>
+      </div>
+    } @else {
+      <!-- Empty left space in item lookup mode -->
+      <div class="footer-left lookup-empty-left"></div>
+    }
+
+    <div class="footer-right">
+      @if (isPaymentScreen()) {
+        <!-- Screen B Abandonner and Retour buttons -->
+        <div class="footer-payment-nav animate-fade">
+          <button class="footer-btn abandon-footer-btn" (click)="abandonnerTransaction()">
+            <span>ABANDONNER</span>
+          </button>
+          <button class="footer-btn retour-footer-btn" (click)="clickRetour()">
+            <span>RETOUR</span>
+          </button>
+        </div>
+      } @else if (activeTab() === 'CART') {
+        <!-- Screen A green Payer button -->
+        <button class="footer-btn payer-btn animate-fade" (click)="clickPayer()">
+          <span>PAYER</span>
+          <svg viewBox="0 0 24 24" class="footer-btn-svg"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" fill="#ffffff"/></svg>
+        </button>
+      } @else if (activeTab() === 'ARTICLE_LOOKUP') {
+        <!-- SCREEN C: LOOKUP BUTTONS -->
+        <div class="footer-payment-nav animate-fade lookup-footer-nav">
+          <button class="footer-btn abandon-footer-btn annuler-btn" (click)="selectTab('CART')">
+            <span>ANNULER</span>
+          </button>
+          <button class="footer-btn abandon-footer-btn effacer-btn" (click)="clearLookupForm()">
+            <span>EFFACER</span>
+          </button>
+          <button class="footer-btn payer-btn recherche-btn" (click)="submitLookupSearch()">
+            <span>RECHERCHE</span>
+          </button>
+        </div>
+      } @else if (activeTab() === 'TRANSACTION_LOOKUP') {
+        <!-- SCREEN D: TRANSACTION LOOKUP BUTTONS -->
+        <div class="footer-payment-nav animate-fade lookup-footer-nav">
+          <button class="footer-btn abandon-footer-btn annuler-btn" (click)="selectTab('CART')">
+            <span>ANNULER</span>
+          </button>
+          <button class="footer-btn abandon-footer-btn effacer-btn" (click)="clearTransactionLookupForm()">
+            <span>EFFACER</span>
+          </button>
+          <button class="footer-btn payer-btn recherche-btn" (click)="submitTransactionLookup()">
+            <span>RECHERCHE</span>
+          </button>
+        </div>
+      }
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE MODAL DIALOGS OVERLAYS -->
+  @if (activeModal() !== null) {
+    <div class="modal-overlay animate-fade" (click)="closeModal()">
+      <div class="modal-card animate-scale" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+          <span class="modal-title">
+            @if (activeModal() === 'CASH') { 💵 ENCAISSEMENT ESPÈCES }
+            @else if (activeModal() === 'CARD') { 💳 PAIEMENT PAR CARTE }
+            @else if (activeModal() === 'ONEY') { ⚡ FINANCEMENT ONEY }
+            @else if (activeModal() === 'GIFT_CARD') { 🎁 VALIDATION CARTE CADEAU }
+            @else if (activeModal() === 'VOUCHER') { 🎫 VALIDATION BON D'ACHAT }
+            @else if (activeModal() === 'CLIENT') { 👤 ASSOCIATION CLIENT }
+            @else if (activeModal() === 'PIN') { 🔒 CODE D'AUTORISATION MANAGER }
+            @else if (activeModal() === 'SUSPENDED') { 📂 REPRENDRE UNE TRANSACTION }
+            @else if (activeModal() === 'DOCUMENT') { 📄 DOCUMENT PRINT SYSTEM }
+          </span>
+          <button class="modal-close" (click)="closeModal()">×</button>
+        </header>
+
+        <div class="modal-body">
+          <!-- 1. CASH DRAWER MODAL -->
+          @if (activeModal() === 'CASH') {
+            <div class="cash-drawer-layout">
+              <div class="cash-inputs-col">
+                <div class="cash-stat">
+                  <span class="stat-lbl">Reste à payer</span>
+                  <span class="stat-val highlight-blue">{{ transactionService.amountDue() | number:'1.2-2' }} €</span>
+                </div>
+                <div class="cash-stat">
+                  <span class="stat-lbl">Espèces reçues</span>
+                  <input type="text" class="cash-received-field" [value]="cashReceivedInput() ? cashReceivedInput() + ' €' : '0.00 €'" readonly />
+                </div>
+                <div class="cash-stat">
+                  <span class="stat-lbl">Monnaie à rendre</span>
+                  <span class="stat-val highlight-green">{{ cashChangeDue() | number:'1.2-2' }} €</span>
+                </div>
+                <button class="modal-submit-btn" [disabled]="(parseFloat(cashReceivedInput()) || 0) <= 0" (click)="submitCashPayment()">
+                  Valider le paiement
+                </button>
+              </div>
+
+              <!-- Quick amount buttons & Keypad -->
+              <div class="cash-keypad-col">
+                <div class="quick-cash-row">
+                  <button class="quick-cash-btn" (click)="addCashQuickAmount(5)">+5 €</button>
+                  <button class="quick-cash-btn" (click)="addCashQuickAmount(10)">+10 €</button>
+                  <button class="quick-cash-btn" (click)="addCashQuickAmount(20)">+20 €</button>
+                  <button class="quick-cash-btn" (click)="addCashQuickAmount(50)">+50 €</button>
+                </div>
+                <div class="num-keypad">
+                  <button class="keypad-btn" (click)="cashRegisterKeyPress('7')">7</button>
+                  <button class="keypad-btn" (click)="cashRegisterKeyPress('8')">8</button>
+                  <button class="keypad-btn" (click)="cashRegisterKeyPress('9')">9</button>
+                  <button class="keypad-btn" (click)="cashRegisterKeyPress('4')">4</button>
+                  <button class="keypad-btn" (click)="cashRegisterKeyPress('5')">5</button>
+                  <button class="keypad-btn" (click)="cashRegisterKeyPress('6')">6</button>
+                  <button class="keypad-btn" (click)="cashRegisterKeyPress('1')">1</button>
+                  <button class="keypad-btn" (click)="cashRegisterKeyPress('2')">2</button>
+                  <button class="keypad-btn" (click)="cashRegisterKeyPress('3')">3</button>
+                  <button class="keypad-btn" (click)="cashRegisterKeyPress('.')">.</button>
+                  <button class="keypad-btn" (click)="cashRegisterKeyPress('0')">0</button>
+                  <button class="keypad-btn clear" (click)="cashRegisterKeyPress('C')">C</button>
+                </div>
+              </div>
+            </div>
+          }
+
+          <!-- 2. CARD MODAL -->
+          @if (activeModal() === 'CARD') {
+            <div class="card-terminal-simulation">
+              <div class="terminal-body shadow-lg">
+                <div class="terminal-screen" [class.processing]="cardSimState() === 'PROCESSING'" [class.success]="cardSimState() === 'SUCCESS'">
+                  @if (cardSimState() === 'PROCESSING') {
+                    <div class="spinner"></div>
+                    <p>Connexion TPE en cours...</p>
+                    <span>Montant: {{ transactionService.amountDue() | number:'1.2-2' }} €</span>
+                  } @else if (cardSimState() === 'SUCCESS') {
+                    <div class="success-checkmark">✓</div>
+                    <p>PAIEMENT ACCEPTE</p>
+                    <span>Merci pour votre achat</span>
+                  }
+                </div>
+                <div class="tpe-footer">
+                  <div class="card-slot">Insérer/Présenter carte</div>
+                </div>
+              </div>
+            </div>
+          }
+
+          <!-- 3. ONEY FINANCING MODAL -->
+          @if (activeModal() === 'ONEY') {
+            <div class="oney-layout">
+              <p class="oney-intro">Simulateur de financement client direct Oney</p>
+              <div class="oney-options">
+                <div class="oney-card" [class.active]="selectedOneyTerm() === 3" (click)="selectedOneyTerm.set(3)">
+                  <h4>Paiement en 3x</h4>
+                  <p>Frais: 1.5%</p>
+                  <span>3 mensualités de <strong>{{ (transactionService.amountDue() / 3) | number:'1.2-2' }} €</strong></span>
+                </div>
+                <div class="oney-card" [class.active]="selectedOneyTerm() === 4" (click)="selectedOneyTerm.set(4)">
+                  <h4>Paiement en 4x</h4>
+                  <p>Frais: 2.2%</p>
+                  <span>4 mensualités de <strong>{{ (transactionService.amountDue() / 4) | number:'1.2-2' }} €</strong></span>
+                </div>
+              </div>
+              <button class="modal-submit-btn" (click)="submitOneyPayment()">
+                Approuver le contrat de financement Oney
+              </button>
+            </div>
+          }
+
+          <!-- 4. GIFT CARD / VOUCHER MODALS -->
+          @if (activeModal() === 'GIFT_CARD' || activeModal() === 'VOUCHER') {
+            <div class="code-entry-layout">
+              <p>Veuillez saisir le code barres ou le numéro d'identification :</p>
+              <input type="text" class="barcode-input" [(ngModel)]="genericCodeInput" placeholder="Ex: LMGIFT98765432" />
+              <button class="modal-submit-btn" (click)="activeModal() === 'GIFT_CARD' ? submitGiftCardPayment() : submitVoucherPayment()">
+                Valider & Déduire
+              </button>
+            </div>
+          }
+
+          <!-- 5. CLIENT MODAL -->
+          @if (activeModal() === 'CLIENT') {
+            <div class="client-selection-layout">
+              <h3>Associer un profil à la transaction active</h3>
+              <div class="client-cards">
+                <div class="client-card" (click)="selectCustomerMock('standard')">
+                  <h4>M. ANIRBAN ROY</h4>
+                  <p>Fidélité standard (Maison) • 345 pts</p>
+                  <span>15 Rue Lafayette, 47000 Agen</span>
+                </div>
+                <div class="client-card pro" (click)="selectCustomerMock('pro')">
+                  <h4>ANIRBAN BOE S.A.S. (PRO)</h4>
+                  <p>Compte PRO Élite • 1250 pts</p>
+                  <span>Siret: 482 910 482 00018</span>
+                </div>
+              </div>
+              <button class="action-btn active-btn remove-client" (click)="selectCustomerMock('none')">
+                Détacher le client du panier
+              </button>
+            </div>
+          }
+
+          <!-- 6. PIN MODAL -->
+          @if (activeModal() === 'PIN') {
+            <div class="pin-pad-layout">
+              <p class="pin-prompt">Saisissez le code d'autorisation administrateur :</p>
+              
+              <div class="pin-display-dots">
+                <span class="dot" [class.filled]="pinBuffer().length >= 1"></span>
+                <span class="dot" [class.filled]="pinBuffer().length >= 2"></span>
+                <span class="dot" [class.filled]="pinBuffer().length >= 3"></span>
+                <span class="dot" [class.filled]="pinBuffer().length >= 4"></span>
+              </div>
+
+              @if (pinError()) {
+                <span class="pin-err-lbl">Code incorrect (Indice: 1234)</span>
+              }
+
+              <div class="pin-keypad">
+                <button class="pin-btn" (click)="pinKeyPress('1')">1</button>
+                <button class="pin-btn" (click)="pinKeyPress('2')">2</button>
+                <button class="pin-btn" (click)="pinKeyPress('3')">3</button>
+                <button class="pin-btn" (click)="pinKeyPress('4')">4</button>
+                <button class="pin-btn" (click)="pinKeyPress('5')">5</button>
+                <button class="pin-btn" (click)="pinKeyPress('6')">6</button>
+                <button class="pin-btn" (click)="pinKeyPress('7')">7</button>
+                <button class="pin-btn" (click)="pinKeyPress('8')">8</button>
+                <button class="pin-btn" (click)="pinKeyPress('9')">9</button>
+                <button class="pin-btn clear" (click)="clearPin()">C</button>
+                <button class="pin-btn" (click)="pinKeyPress('0')">0</button>
+                <button class="pin-btn submit" [disabled]="pinBuffer().length < 4" (click)="submitPin()">OK</button>
+              </div>
+            </div>
+          }
+
+          <!-- 7. SUSPENDED TRANSACTIONS MODAL -->
+          @if (activeModal() === 'SUSPENDED') {
+            <div class="suspended-list-layout">
+              @if (transactionService.suspendedTransactions().length === 0) {
+                <div class="empty-list">Aucun panier suspendu sauvegardé dans la base PostgreSQL.</div>
+              } @else {
+                <div class="suspended-cards">
+                  @for (tx of transactionService.suspendedTransactions(); track tx.id) {
+                    <div class="suspended-card" (click)="resumeSuspendedCart(tx)">
+                      <div class="sus-meta">
+                        <span class="sus-id">Panier ID: {{ tx.id.substring(0, 8) }}</span>
+                        <span class="sus-time">{{ tx.createdAt | date:'HH:mm' }}</span>
+                      </div>
+                      <div class="sus-body">
+                        <span>Articles: {{ tx.items.length }}</span>
+                        <strong>Montant: {{ tx.totalAmount | number:'1.2-2' }} €</strong>
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          }
+
+          <!-- 8. DOCUMENT PRINT MODAL -->
+          @if (activeModal() === 'DOCUMENT') {
+            <div class="print-document-layout">
+              <div class="print-actions-top">
+                <button class="print-submit-btn" (click)="printCurrentDocument()">
+                  🖨️ Lancer l'impression physique
+                </button>
+              </div>
+
+              <!-- Page template preview -->
+              <div class="a4-page-preview shadow-lg" id="printable-area">
+                <!-- Brand Header -->
+                <div class="doc-header">
+                  <div class="doc-logo-title">
+                    <svg viewBox="0 0 100 100" class="logo-svg-small">
+                      <polygon points="50,10 90,90 10,90" fill="#84bd00"/>
+                      <polygon points="50,30 75,80 25,80" fill="#ffffff"/>
+                    </svg>
+                    <h2>LEROY MERLIN AGEN</h2>
+                  </div>
+                  <div class="doc-meta">
+                    <p><strong>BOÉ CAISSE 51</strong></p>
+                    <p>Date: {{ currentTime() | date:'dd/MM/yyyy' }}</p>
+                    <p>Heure: {{ currentTime() | date:'HH:mm' }}</p>
+                  </div>
+                </div>
+
+                <div class="doc-divider"></div>
+
+                <!-- Document Specific Title -->
+                <div class="doc-title-section">
+                  <h3>
+                    @if (printedDocType() === 'BULLETIN') { BULLETIN DE VENTE PREVISONNEL }
+                    @else if (printedDocType() === 'COMMANDE') { BON DE COMMANDE CLIENT }
+                    @else if (printedDocType() === 'INVOICE') { FACTURE ACQUITTEE }
+                    @else { TICKET DE CAISSE }
+                  </h3>
+                  <p>Document N° : {{ lastCompletedTransaction() ? lastCompletedTransaction().id.substring(0, 8).toUpperCase() : 'SIMUL-DRAFT' }}</p>
+                </div>
+
+                <!-- Customer Details if attached -->
+                @if (selectedCustomer() || printedDocType() === 'INVOICE') {
+                  <div class="doc-customer-box">
+                    <p><strong>Bénéficiaire :</strong></p>
+                    @if (printedDocType() === 'INVOICE') {
+                      <p>Raison Sociale: {{ invoiceName() }}</p>
+                      <p>Adresse: {{ invoiceAddress() }}</p>
+                      <p>Siret: {{ invoiceSiret() }}</p>
+                    } @else {
+                      <p>Client: {{ selectedCustomer().name }}</p>
+                      <p>Adresse: {{ selectedCustomer().address }}</p>
+                    }
+                  </div>
+                }
+
+                <!-- Items list -->
+                <table class="doc-items-table">
+                  <thead>
+                    <tr>
+                      <th>Désignation article</th>
+                      <th class="text-center">Qté</th>
+                      <th class="text-right">P.U.</th>
+                      <th class="text-right">Total TTC</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Fallback to mock items if previewing without checkout -->
+                    @if (lastCompletedTransaction()) {
+                      @for (item of lastCompletedTransaction().items; track item.id) {
+                        <tr>
+                          <td>{{ item.product.name }}</td>
+                          <td class="text-center">{{ item.quantity }}</td>
+                          <td class="text-right">{{ item.price | number:'1.2-2' }} €</td>
+                          <td class="text-right">{{ (item.price * item.quantity) | number:'1.2-2' }} €</td>
+                        </tr>
+                      }
+                    } @else {
+                      @for (item of transactionService.cartItems(); track item.id) {
+                        <tr>
+                          <td>{{ item.product.name }}</td>
+                          <td class="text-center">{{ item.quantity }}</td>
+                          <td class="text-right">{{ item.price | number:'1.2-2' }} €</td>
+                          <td class="text-right">{{ (item.price * item.quantity) | number:'1.2-2' }} €</td>
+                        </tr>
+                      }
+                    }
+                  </tbody>
+                </table>
+
+                <div class="doc-divider"></div>
+
+                <!-- Totals -->
+                <div class="doc-totals-box">
+                  <div class="totals-row">
+                    <span>TVA comprise (20%):</span>
+                    <span>
+                      {{ (lastCompletedTransaction() ? lastCompletedTransaction().taxAmount : transactionService.taxAmount()) | number:'1.2-2' }} €
+                    </span>
+                  </div>
+                  <div class="totals-row major">
+                    <strong>TOTAL TTC À PAYER :</strong>
+                    <strong>
+                      {{ (lastCompletedTransaction() ? lastCompletedTransaction().totalAmount : transactionService.totalAmount()) | number:'1.2-2' }} €
+                    </strong>
+                  </div>
+                </div>
+
+                <!-- Payments list if paid -->
+                @if (lastCompletedTransaction() && lastCompletedTransaction().payments.length > 0) {
+                  <div class="doc-divider"></div>
+                  <div class="doc-payments-section">
+                    <p><strong>Règlements reçus :</strong></p>
+                    @for (p of lastCompletedTransaction().payments; track p.id) {
+                      <p>• {{ p.method }} : {{ p.amount | number:'1.2-2' }} €</p>
+                    }
+                  </div>
+                }
+
+                <!-- Footer barcode and thanks -->
+                <div class="doc-footer">
+                  <div class="mock-barcode-draw">
+                    <svg viewBox="0 0 100 40" class="barcode-svg-element" style="width: 150px; height: 50px;">
+                      <rect x="0" y="0" width="100" height="40" fill="#ffffff"/>
+                      <rect x="5" y="5" width="2" height="30" fill="#000000"/>
+                      <rect x="8" y="5" width="1" height="30" fill="#000000"/>
+                      <rect x="10" y="5" width="3" height="30" fill="#000000"/>
+                      <rect x="15" y="5" width="1" height="30" fill="#000000"/>
+                      <rect x="18" y="5" width="2" height="30" fill="#000000"/>
+                      <rect x="22" y="5" width="4" height="30" fill="#000000"/>
+                      <rect x="28" y="5" width="1" height="30" fill="#000000"/>
+                      <rect x="30" y="5" width="2" height="30" fill="#000000"/>
+                      <rect x="34" y="5" width="3" height="30" fill="#000000"/>
+                      <rect x="39" y="5" width="1" height="30" fill="#000000"/>
+                      <rect x="42" y="5" width="2" height="30" fill="#000000"/>
+                      <rect x="46" y="5" width="3" height="30" fill="#000000"/>
+                      <rect x="50" y="5" width="1" height="30" fill="#000000"/>
+                      <rect x="53" y="5" width="4" height="30" fill="#000000"/>
+                      <rect x="59" y="5" width="2" height="30" fill="#000000"/>
+                      <rect x="63" y="5" width="1" height="30" fill="#000000"/>
+                      <rect x="66" y="5" width="3" height="30" fill="#000000"/>
+                      <rect x="71" y="5" width="2" height="30" fill="#000000"/>
+                      <rect x="75" y="5" width="1" height="30" fill="#000000"/>
+                      <rect x="78" y="5" width="4" height="30" fill="#000000"/>
+                      <rect x="84" y="5" width="2" height="30" fill="#000000"/>
+                      <rect x="88" y="5" width="1" height="30" fill="#000000"/>
+                      <rect x="91" y="5" width="3" height="30" fill="#000000"/>
+                    </svg>
+                    <span style="font-family: monospace; font-size: 9px; display: block; margin-top: 4px; color: #555555; text-align: center; letter-spacing: 1px;">
+                      {{ lastCompletedTransaction() ? lastCompletedTransaction().id.substring(0, 12).toUpperCase() : 'SIMUL-DRAFT' }}
+                    </span>
+                  </div>
+                  <p style="margin-top: 8px;">Merci pour votre confiance. À bientôt chez Leroy Merlin !</p>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

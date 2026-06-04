@@ -1,0 +1,65 @@
+# ==========================================
+# Root .gitignore for Mock Omnistore UI
+# ==========================================
+
+# --- Tools & Utilities ---
+/apache-maven-3.9.6/
+
+# --- Java & Maven (backend & Quotation) ---
+**/target/
+*.class
+*.jar
+*.war
+*.ear
+.flattened-pom.xml
+# Crash logs
+hs_err_pid*
+
+# --- Node & Angular (frontend) ---
+**/node_modules/
+**/.angular/
+frontend/dist/
+frontend/tmp/
+frontend/out-tsc/
+frontend/bazel-out/
+npm-debug.log
+yarn-error.log
+connect.lock
+coverage/
+libpeerconnection.log
+testem.log
+typings/
+__screenshots__/
+
+# --- IDEs and Editors ---
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.history/
+.vscode/
+
+# Eclipse
+.project
+.classpath
+.factorypath
+.settings/
+*.launch
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# --- Operating System Files ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
