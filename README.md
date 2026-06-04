@@ -23,9 +23,11 @@ Price synchronization with the Quotation API is on-demand to optimize performanc
 The Omnistore backend interacts with the Quotation API using the following communication structure:
 
 #### **Request**
-- **Endpoint**: `GET /api/quotation/barcode/{barcode}` (e.g., `http://localhost:8081/api/quotation/barcode/123456789`)
+- **Endpoint**: `GET /api/quotation/barcode/{barcode}?currentPrice={price}` (e.g., `http://localhost:8081/api/quotation/barcode/123456789?currentPrice=13.00`)
 - **Headers**: Standard JSON requests
 - **Request Body**: None (the barcode is passed strictly as a path variable)
+- **Query Parameters**:
+  - `currentPrice` (optional, decimal): The product's current stored price in the Omnistore backend database. Used by the Quotation API to detect mismatches.
 - **Timeout**: `5 seconds` (configured in backend `WebClient` call)
 
 #### **Response**
@@ -38,13 +40,20 @@ The Omnistore backend interacts with the Quotation API using the following commu
     "id": "uuid-string-here", 
     "name": "Product Name",
     "barcode": "123456789",
-    "price": 10.99,
+    "price": 14.50,
     "taxRate": 20.00,
     "imageUrl": "http://example.com/image.jpg",
-    "description": "Product Description"
+    "description": "Product Description",
+    "priceChanged": true,
+    "oldPrice": 13.00
   }
   ```
-  *(Note: The backend deserializes this JSON into a `QuotationResponse` DTO, which maps `name`, `barcode`, `price`, `taxRate`, `imageUrl`, and `description`).*
+  *(Note: The backend deserializes this JSON into a `QuotationResponse` DTO, mapping the price change acknowledgement fields: `priceChanged` and `oldPrice`).*
+
+#### **🔄 Price Mismatch Acknowledgement & UI Alert**
+- **Quotation Acknowledgement**: When `currentPrice` is provided and differs from the Quotation database price, the Quotation API responds with `"priceChanged": true` and `"oldPrice": <passedPrice>`.
+- **Backend Sync & Recalculation**: If a mismatch is detected, the backend updates the product's price/taxRate locally, adjusts the active cart item's price, and sets transient attributes `priceChangedSync: true` and `priceChangedMessage` on the transaction object returned to the frontend.
+- **Frontend Alert Dialog**: When the Angular UI processes the transaction response and detects `priceChangedSync === true`, it triggers a modal popup (`⚠️ AJUSTEMENT DE TARIF`) showing the updated price details to the cashier.
 
 ---
 
