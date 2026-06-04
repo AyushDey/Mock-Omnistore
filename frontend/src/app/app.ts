@@ -149,6 +149,14 @@ export class App implements OnInit {
         }
       }
     });
+
+    // Watch priceChangeAlert to trigger a notification/modal
+    effect(() => {
+      const alert = this.transactionService.priceChangeAlert();
+      if (alert) {
+        this.activeModal.set('PRICE_CHANGED');
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -771,6 +779,9 @@ export class App implements OnInit {
 
   // Helpers
   closeModal(): void {
+    if (this.activeModal() === 'PRICE_CHANGED') {
+      this.transactionService.priceChangeAlert.set(null);
+    }
     this.activeModal.set(null);
     this.pinBuffer.set('');
     this.pinError.set(false);

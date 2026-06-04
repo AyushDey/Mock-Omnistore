@@ -775,6 +775,7 @@
             @else if (activeModal() === 'PIN') { 🔒 CODE D'AUTORISATION MANAGER }
             @else if (activeModal() === 'SUSPENDED') { 📂 REPRENDRE UNE TRANSACTION }
             @else if (activeModal() === 'DOCUMENT') { 📄 DOCUMENT PRINT SYSTEM }
+            @else if (activeModal() === 'PRICE_CHANGED') { ⚠️ AJUSTEMENT DE TARIF }
           </span>
           <button class="modal-close" (click)="closeModal()">×</button>
         </header>
@@ -1115,6 +1116,26 @@
                   <p style="margin-top: 8px;">Merci pour votre confiance. À bientôt chez Leroy Merlin !</p>
                 </div>
               </div>
+            </div>
+          }
+
+          <!-- 9. PRICE CHANGED MODAL -->
+          @if (activeModal() === 'PRICE_CHANGED') {
+            <div class="price-changed-alert-layout animate-fade">
+              <div class="alert-icon-wrapper">
+                <svg viewBox="0 0 24 24" class="alert-big-svg">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="#f39c12"/>
+                </svg>
+              </div>
+              <h3 class="alert-heading">Tarif Modifié</h3>
+              <p class="alert-message">{{ transactionService.priceChangeAlert()?.message }}</p>
+              <div class="alert-info-box">
+                <span class="info-icon">ℹ️</span>
+                <span class="info-text">Le total du panier a été recalculé avec le nouveau tarif.</span>
+              </div>
+              <button class="modal-submit-btn confirm-alert-btn" (click)="closeModal()">
+                OK, J'AI COMPRIS
+              </button>
             </div>
           }
         </div>

@@ -37,6 +37,8 @@ export interface Transaction {
   payments: Payment[];
   createdAt: string;
   updatedAt: string;
+  priceChangedSync?: boolean;
+  priceChangedMessage?: string;
 }
 
 @Injectable({
@@ -48,6 +50,7 @@ export class TransactionService {
 
   // Signals for state management
   readonly activeTransaction = signal<Transaction | null>(null);
+  readonly priceChangeAlert = signal<{ message: string } | null>(null);
   readonly suspendedTransactions = signal<Transaction[]>([]);
   readonly allTransactions = signal<Transaction[]>([]);
   readonly loading = signal<boolean>(false);
@@ -71,11 +74,20 @@ export class TransactionService {
     return Math.max(0, parseFloat((total - paid).toFixed(2)));
   });
 
+  private updateActiveTransaction(tx: Transaction | null): void {
+    this.activeTransaction.set(tx);
+    if (tx && tx.priceChangedSync) {
+      this.priceChangeAlert.set({
+        message: tx.priceChangedMessage || 'Le prix a changé.'
+      });
+    }
+  }
+
   loadActiveTransaction(): void {
     this.loading.set(true);
     this.http.get<Transaction>(`${this.baseUrl}/transactions/active`).subscribe({
       next: (tx) => {
-        this.activeTransaction.set(tx);
+        this.updateActiveTransaction(tx);
         this.loading.set(false);
       },
       error: (err) => this.handleError('Failed to load active transaction', err)
@@ -91,7 +103,7 @@ export class TransactionService {
     return this.http.post<Transaction>(`${this.baseUrl}/transactions/items`, {}, { params }).pipe(
       tap({
         next: (tx) => {
-          this.activeTransaction.set(tx);
+          this.updateActiveTransaction(tx);
           this.errorMessage.set(null);
           this.loading.set(false);
         },
@@ -106,7 +118,7 @@ export class TransactionService {
     
     this.http.put<Transaction>(`${this.baseUrl}/transactions/items/${itemId}`, {}, { params }).subscribe({
       next: (tx) => {
-        this.activeTransaction.set(tx);
+        this.updateActiveTransaction(tx);
         this.loading.set(false);
       },
       error: (err) => this.handleError('Failed to update quantity', err)
@@ -117,7 +129,7 @@ export class TransactionService {
     this.loading.set(true);
     this.http.delete<Transaction>(`${this.baseUrl}/transactions/items/${itemId}`).subscribe({
       next: (tx) => {
-        this.activeTransaction.set(tx);
+        this.updateActiveTransaction(tx);
         this.loading.set(false);
       },
       error: (err) => this.handleError('Failed to remove item', err)
@@ -129,7 +141,7 @@ export class TransactionService {
     return this.http.post<Transaction>(`${this.baseUrl}/transactions/suspend`, {}).pipe(
       tap({
         next: (tx) => {
-          this.activeTransaction.set(null);
+          this.updateActiveTransaction(null);
           this.loadActiveTransaction(); // reload/create new active transaction
           this.loading.set(false);
         },
@@ -165,7 +177,7 @@ export class TransactionService {
     return this.http.post<Transaction>(`${this.baseUrl}/transactions/resume/${id}`, {}).pipe(
       tap({
         next: (tx) => {
-          this.activeTransaction.set(tx);
+          this.updateActiveTransaction(tx);
           this.loading.set(false);
         },
         error: (err) => this.handleError('Failed to resume transaction', err)
@@ -178,7 +190,7 @@ export class TransactionService {
     return this.http.post<Transaction>(`${this.baseUrl}/transactions/abandon`, {}).pipe(
       tap({
         next: (tx) => {
-          this.activeTransaction.set(tx);
+          this.updateActiveTransaction(tx);
           this.loading.set(false);
         },
         error: (err) => this.handleError('Failed to abandon transaction', err)
@@ -195,7 +207,7 @@ export class TransactionService {
     return this.http.post<Transaction>(`${this.baseUrl}/transactions/pay`, {}, { params }).pipe(
       tap({
         next: (tx) => {
-          this.activeTransaction.set(tx);
+          this.updateActiveTransaction(tx);
           this.loading.set(false);
         },
         error: (err) => this.handleError('Failed to process payment', err)
@@ -209,7 +221,7 @@ export class TransactionService {
     
     this.http.post<Transaction>(`${this.baseUrl}/transactions/invoice`, {}, { params }).subscribe({
       next: (tx) => {
-        this.activeTransaction.set(tx);
+        this.updateActiveTransaction(tx);
         this.loading.set(false);
       },
       error: (err) => this.handleError('Failed to toggle invoice status', err)

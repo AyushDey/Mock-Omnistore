@@ -91,7 +91,7 @@ public class TransactionServiceTest {
     @SuppressWarnings("unchecked")
     private void mockQuotationApiResponse(QuotationResponse response) {
         when(quotationWebClient.get()).thenReturn(requestHeadersUriSpec);
-        when(requestHeadersUriSpec.uri(anyString(), any(Object[].class))).thenReturn(requestHeadersSpec);
+        when(requestHeadersUriSpec.uri(any(java.util.function.Function.class))).thenReturn(requestHeadersSpec);
         when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
         when(responseSpec.bodyToMono(QuotationResponse.class)).thenReturn(Mono.just(response));
     }
@@ -102,7 +102,7 @@ public class TransactionServiceTest {
     @SuppressWarnings("unchecked")
     private void mockQuotationApiFailure() {
         when(quotationWebClient.get()).thenReturn(requestHeadersUriSpec);
-        when(requestHeadersUriSpec.uri(anyString(), any(Object[].class))).thenReturn(requestHeadersSpec);
+        when(requestHeadersUriSpec.uri(any(java.util.function.Function.class))).thenReturn(requestHeadersSpec);
         when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
         when(responseSpec.bodyToMono(QuotationResponse.class)).thenReturn(Mono.error(new RuntimeException("Connection refused")));
     }

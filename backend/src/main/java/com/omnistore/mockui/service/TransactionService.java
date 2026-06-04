@@ -65,7 +65,15 @@ public class TransactionService {
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with barcode: " + barcode));
 
         // --- Quotation API Price Sync ---
+        BigDecimal oldPrice = product.getPrice();
         boolean priceUpdated = syncPriceFromQuotationApi(product);
+        BigDecimal newPrice = product.getPrice();
+
+        if (priceUpdated) {
+            active.setPriceChangedSync(true);
+            active.setPriceChangedMessage(String.format("Le prix de '%s' a été mis à jour de %.2f € à %.2f € (synchronisé avec l'API Quotation).", 
+                    product.getName(), oldPrice, newPrice));
+        }
 
         Optional<TransactionItem> existingItemOpt = active.getItems().stream()
                 .filter(item -> item.getProduct().getBarcode().equals(barcode))
@@ -112,7 +120,10 @@ public class TransactionService {
         try {
             log.info("Invoking Quotation API for barcode: {} ({}) to check for price updates", product.getBarcode(), product.getName());
             QuotationResponse quotation = quotationWebClient.get()
-                    .uri("/barcode/{barcode}", product.getBarcode())
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/barcode/{barcode}")
+                            .queryParam("currentPrice", product.getPrice())
+                            .build(product.getBarcode()))
                     .retrieve()
                     .bodyToMono(QuotationResponse.class)
                     .timeout(Duration.ofSeconds(5))
@@ -169,6 +180,17 @@ public class TransactionService {
             transactionItemRepository.delete(item);
         } else {
             item.setQuantity(quantity);
+            // Sync price when quantity is updated
+            Product product = item.getProduct();
+            BigDecimal oldPrice = product.getPrice();
+            boolean priceUpdated = syncPriceFromQuotationApi(product);
+            BigDecimal newPrice = product.getPrice();
+            if (priceUpdated) {
+                item.setPrice(newPrice);
+                active.setPriceChangedSync(true);
+                active.setPriceChangedMessage(String.format("Le prix de '%s' a été mis à jour de %.2f € à %.2f € (synchronisé avec l'API Quotation).", 
+                        product.getName(), oldPrice, newPrice));
+            }
         }
 
         recalculateTotals(active);

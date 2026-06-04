@@ -34,6 +34,7 @@ describe('App Component', () => {
 
     mockTransactionService = {
       activeTransaction: activeTxSignal,
+      priceChangeAlert: signal<any>(null),
       suspendedTransactions: suspendedListSignal,
       allTransactions: signal<any[]>([]),
       loading: signal(false),
@@ -128,5 +129,19 @@ describe('App Component', () => {
     
     expect(component.managerAuthorized()).toBe(false);
     expect(component.pinError()).toBe(true);
+  });
+
+  it('should open the PRICE_CHANGED modal when priceChangeAlert signal is set', () => {
+    mockTransactionService.priceChangeAlert.set({ message: 'Price changed test message' });
+    fixture.detectChanges();
+    expect(component.activeModal()).toBe('PRICE_CHANGED');
+  });
+
+  it('should clear priceChangeAlert signal when PRICE_CHANGED modal is closed', () => {
+    component.activeModal.set('PRICE_CHANGED');
+    mockTransactionService.priceChangeAlert.set({ message: 'Price changed test message' });
+    component.closeModal();
+    expect(mockTransactionService.priceChangeAlert()).toBeNull();
+    expect(component.activeModal()).toBeNull();
   });
 });

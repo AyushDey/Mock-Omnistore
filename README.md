@@ -18,7 +18,36 @@ Price synchronization with the Quotation API is on-demand to optimize performanc
 - **Behavior**: The Omnistore backend queries the Quotation API for the latest rate and updates the local cart item.
 - **Fallback**: If the Quotation API is unreachable, the backend gracefully falls back to the locally cached prices.
 
+### 🔌 Quotation API Integration Contract
+
+The Omnistore backend interacts with the Quotation API using the following communication structure:
+
+#### **Request**
+- **Endpoint**: `GET /api/quotation/barcode/{barcode}` (e.g., `http://localhost:8081/api/quotation/barcode/123456789`)
+- **Headers**: Standard JSON requests
+- **Request Body**: None (the barcode is passed strictly as a path variable)
+- **Timeout**: `5 seconds` (configured in backend `WebClient` call)
+
+#### **Response**
+- **HTTP Status Codes**:
+  - `200 OK`: When the barcode is recognized.
+  - `404 Not Found`: When the barcode is not found in the Quotation database.
+- **JSON Response Body (200 OK)**:
+  ```json
+  {
+    "id": "uuid-string-here", 
+    "name": "Product Name",
+    "barcode": "123456789",
+    "price": 10.99,
+    "taxRate": 20.00,
+    "imageUrl": "http://example.com/image.jpg",
+    "description": "Product Description"
+  }
+  ```
+  *(Note: The backend deserializes this JSON into a `QuotationResponse` DTO, which maps `name`, `barcode`, `price`, `taxRate`, `imageUrl`, and `description`).*
+
 ---
+
 
 ## 📋 Prerequisites
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -31,10 +32,18 @@ public class QuotationController {
     }
 
     @GetMapping("/barcode/{barcode}")
-    public ResponseEntity<QuotationItem> getByBarcode(@PathVariable("barcode") String barcode) {
-        log.info("Received request for quotation by barcode: {}", barcode);
+    public ResponseEntity<QuotationItem> getByBarcode(
+            @PathVariable("barcode") String barcode,
+            @RequestParam(value = "currentPrice", required = false) BigDecimal currentPrice) {
+        log.info("Received request for quotation by barcode: {} (current price passed: {})", barcode, currentPrice);
         return quotationService.getByBarcode(barcode)
                 .map(item -> {
+                    if (currentPrice != null && item.getPrice().compareTo(currentPrice) != 0) {
+                        item.setPriceChanged(true);
+                        item.setOldPrice(currentPrice);
+                    } else {
+                        item.setPriceChanged(false);
+                    }
                     log.info("Quotation found for barcode: {} (price: {}, name: {})", barcode, item.getPrice(), item.getName());
                     return ResponseEntity.ok(item);
                 })

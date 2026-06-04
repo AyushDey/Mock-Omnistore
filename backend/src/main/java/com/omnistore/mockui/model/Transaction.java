@@ -51,6 +51,12 @@ public class Transaction {
     @Builder.Default
     private List<Payment> payments = new ArrayList<>();
 
+    @Transient
+    private Boolean priceChangedSync;
+
+    @Transient
+    private String priceChangedMessage;
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();

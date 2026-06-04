@@ -35,4 +35,10 @@ public class QuotationItem {
 
     @Column(length = 500)
     private String description;
+
+    @Transient
+    private Boolean priceChanged;
+
+    @Transient
+    private BigDecimal oldPrice;
 }
