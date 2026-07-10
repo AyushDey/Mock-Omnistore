@@ -91,7 +91,7 @@ public class TransactionServiceTest {
     @SuppressWarnings("unchecked")
     private void mockQuotationApiResponse(QuotationResponse response) {
         when(quotationWebClient.get()).thenReturn(requestHeadersUriSpec);
-        when(requestHeadersUriSpec.uri(anyString(), any(Object[].class))).thenReturn(requestHeadersSpec);
+        when(requestHeadersUriSpec.uri(any(java.util.function.Function.class))).thenReturn(requestHeadersSpec);
         when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
         when(responseSpec.bodyToMono(QuotationResponse.class)).thenReturn(Mono.just(response));
     }
@@ -102,7 +102,7 @@ public class TransactionServiceTest {
     @SuppressWarnings("unchecked")
     private void mockQuotationApiFailure() {
         when(quotationWebClient.get()).thenReturn(requestHeadersUriSpec);
-        when(requestHeadersUriSpec.uri(anyString(), any(Object[].class))).thenReturn(requestHeadersSpec);
+        when(requestHeadersUriSpec.uri(any(java.util.function.Function.class))).thenReturn(requestHeadersSpec);
         when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
         when(responseSpec.bodyToMono(QuotationResponse.class)).thenReturn(Mono.error(new RuntimeException("Connection refused")));
     }
@@ -243,6 +243,7 @@ public class TransactionServiceTest {
                 .price(new BigDecimal("14.50"))
                 .taxRate(new BigDecimal("20.00"))
                 .name("CLE MEULEUSE WOLFCRAFT")
+                .priceChanged(true)
                 .build());
 
         when(transactionRepository.findFirstByStatusOrderByCreatedAtDesc(TransactionStatus.ACTIVE))
@@ -255,7 +256,10 @@ public class TransactionServiceTest {
 
         // Verify the cart item uses the quotation price
         assertEquals(1, result.getItems().size());
-        assertEquals(new BigDecimal("14.50"), result.getItems().get(0).getPrice());
+        TransactionItem item = result.getItems().get(0);
+        assertEquals(new BigDecimal("14.50"), item.getPrice());
+        assertTrue(item.getPriceChanged());
+        assertEquals(new BigDecimal("13.00"), item.getOldPrice());
 
         // Verify the product entity was updated in the DB
         assertEquals(new BigDecimal("14.50"), product1.getPrice());
@@ -345,10 +349,13 @@ public class TransactionServiceTest {
 
         // Verify item quantity is increased
         assertEquals(1, result.getItems().size());
-        assertEquals(2, result.getItems().get(0).getQuantity());
+        TransactionItem item = result.getItems().get(0);
+        assertEquals(2, item.getQuantity());
 
         // Verify the cart item price was updated to the quotation price
-        assertEquals(new BigDecimal("14.50"), result.getItems().get(0).getPrice());
+        assertEquals(new BigDecimal("14.50"), item.getPrice());
+        assertTrue(item.getPriceChanged());
+        assertEquals(new BigDecimal("13.00"), item.getOldPrice());
 
         // Verify product was updated
         verify(productRepository, times(1)).save(product1);
@@ -356,5 +363,45 @@ public class TransactionServiceTest {
 
         // Verify totals: 14.50 * 2 = 29.00
         assertEquals(new BigDecimal("29.00"), result.getTotalAmount());
+    }
+
+    @Test
+    void testUpdateItemQuantity_PriceSyncFromQuotationAPI() {
+        // Quotation API returns a DIFFERENT price (14.50 instead of 13.00)
+        mockQuotationApiResponse(QuotationResponse.builder()
+                .barcode("4006885245808")
+                .price(new BigDecimal("14.50"))
+                .taxRate(new BigDecimal("20.00"))
+                .name("CLE MEULEUSE WOLFCRAFT")
+                .priceChanged(true)
+                .build());
+
+        TransactionItem existingItem = TransactionItem.builder()
+                .id(UUID.randomUUID())
+                .transaction(activeTransaction)
+                .product(product1)
+                .quantity(1)
+                .price(new BigDecimal("13.00"))
+                .build();
+        activeTransaction.getItems().add(existingItem);
+
+        when(transactionRepository.findFirstByStatusOrderByCreatedAtDesc(TransactionStatus.ACTIVE))
+                .thenReturn(Optional.of(activeTransaction));
+        when(productRepository.save(any(Product.class))).thenAnswer(i -> i.getArgument(0));
+        when(transactionRepository.save(any(Transaction.class))).thenAnswer(i -> i.getArgument(0));
+
+        Transaction result = transactionService.updateItemQuantity(existingItem.getId(), 2);
+
+        // Verify the cart item quantity and price were updated
+        assertEquals(1, result.getItems().size());
+        TransactionItem item = result.getItems().get(0);
+        assertEquals(2, item.getQuantity());
+        assertEquals(new BigDecimal("14.50"), item.getPrice());
+        assertTrue(item.getPriceChanged());
+        assertEquals(new BigDecimal("13.00"), item.getOldPrice());
+
+        // Verify product in DB was updated
+        verify(productRepository, times(1)).save(product1);
+        assertEquals(new BigDecimal("14.50"), product1.getPrice());
     }
 }

@@ -74,9 +74,9 @@
             type="text" 
             class="barcode-input" 
             [placeholder]="activeTab() === 'TRANSACTION_LOOKUP' ? 'Scan Or Enter Transaction ID' : 'Scannez ou saisissez le code barre de l\'article'"
-            [(ngModel)]="searchQuery"
+            [ngModel]="searchQuery()"
+            (ngModelChange)="searchQuery.set($event); activeTab() === 'TRANSACTION_LOOKUP' ? null : onSearchInput()"
             name="searchQuery"
-            (input)="activeTab() === 'TRANSACTION_LOOKUP' ? null : onSearchInput()"
             autocomplete="off"
           />
           @if (searchQuery()) {
@@ -459,7 +459,8 @@
                 <input 
                   type="text" 
                   class="form-input" 
-                  [(ngModel)]="lookupCode"
+                  [ngModel]="lookupCode()"
+                  (ngModelChange)="lookupCode.set($event)"
                   name="lookupCode"
                   placeholder="Saisissez le code"
                   autocomplete="off"
@@ -471,7 +472,8 @@
                 <input 
                   type="text" 
                   class="form-input" 
-                  [(ngModel)]="lookupDescription"
+                  [ngModel]="lookupDescription()"
+                  (ngModelChange)="lookupDescription.set($event)"
                   name="lookupDescription"
                   placeholder="Saisissez la désignation"
                   autocomplete="off"
@@ -480,7 +482,7 @@
 
               <div class="form-group">
                 <label class="form-label">Rayon</label>
-                <select class="form-select" [(ngModel)]="lookupRayon" name="lookupRayon">
+                <select class="form-select" [ngModel]="lookupRayon()" (ngModelChange)="lookupRayon.set($event)" name="lookupRayon">
                   <option value="">Sélectionner</option>
                   <option value="OUTILLAGE">Outillage</option>
                   <option value="ELECTRICITE">Électricité</option>
@@ -490,7 +492,7 @@
 
               <div class="form-group">
                 <label class="form-label">Sous-Rayon</label>
-                <select class="form-select" [(ngModel)]="lookupSubRayon" name="lookupSubRayon" [disabled]="!lookupRayon()">
+                <select class="form-select" [ngModel]="lookupSubRayon()" (ngModelChange)="lookupSubRayon.set($event)" name="lookupSubRayon" [disabled]="!lookupRayon()">
                   <option value="">Sélectionner</option>
                   <option value="TOURNEVIS">Tournevis & clés</option>
                   <option value="FIXATIONS">Fixations & vis</option>
@@ -527,7 +529,7 @@
             <form class="lookup-search-form" (submit)="submitTransactionLookup($event)">
               <div class="form-group inline-checkbox-group">
                 <label class="switch-container">
-                  <input type="checkbox" [(ngModel)]="lookupTxNonOmnistore" name="lookupTxNonOmnistore" />
+                  <input type="checkbox" [ngModel]="lookupTxNonOmnistore()" (ngModelChange)="lookupTxNonOmnistore.set($event)" name="lookupTxNonOmnistore" />
                   <span class="custom-checkbox"></span>
                   <span class="switch-label-text">Transactions Non Omnistore</span>
                 </label>
@@ -538,7 +540,8 @@
                 <input 
                   type="text" 
                   class="form-input" 
-                  [(ngModel)]="lookupTxBarcode"
+                  [ngModel]="lookupTxBarcode()"
+                  (ngModelChange)="lookupTxBarcode.set($event)"
                   name="lookupTxBarcode"
                   placeholder="Saisissez un code barre ou nom"
                   autocomplete="off"
@@ -550,7 +553,8 @@
                 <input 
                   type="text" 
                   class="form-input" 
-                  [(ngModel)]="lookupTxOrderId"
+                  [ngModel]="lookupTxOrderId()"
+                  (ngModelChange)="lookupTxOrderId.set($event)"
                   name="lookupTxOrderId"
                   placeholder="Saisissez l'ID"
                   autocomplete="off"
@@ -562,7 +566,8 @@
                 <input 
                   type="text" 
                   class="form-input" 
-                  [(ngModel)]="lookupTxPhone"
+                  [ngModel]="lookupTxPhone()"
+                  (ngModelChange)="lookupTxPhone.set($event)"
                   name="lookupTxPhone"
                   placeholder="Saisissez le téléphone"
                   autocomplete="off"
@@ -573,11 +578,11 @@
                 <label class="form-label">Période de recherche</label>
                 <div class="date-inputs-row">
                   <div class="date-input-wrapper">
-                    <input type="date" class="form-input date-input" [(ngModel)]="lookupTxStartDate" name="lookupTxStartDate" />
+                    <input type="date" class="form-input date-input" [ngModel]="lookupTxStartDate()" (ngModelChange)="lookupTxStartDate.set($event)" name="lookupTxStartDate" />
                   </div>
                   <span class="date-sep">au</span>
                   <div class="date-input-wrapper">
-                    <input type="date" class="form-input date-input" [(ngModel)]="lookupTxEndDate" name="lookupTxEndDate" />
+                    <input type="date" class="form-input date-input" [ngModel]="lookupTxEndDate()" (ngModelChange)="lookupTxEndDate.set($event)" name="lookupTxEndDate" />
                   </div>
                 </div>
               </div>
@@ -585,9 +590,9 @@
               <div class="form-group price-range-group">
                 <label class="form-label">Fourchette de montant (€)</label>
                 <div class="range-inputs-row">
-                  <input type="number" class="form-input number-input" [(ngModel)]="lookupTxMinAmount" name="lookupTxMinAmount" placeholder="Min" />
+                  <input type="number" class="form-input number-input" [ngModel]="lookupTxMinAmount()" (ngModelChange)="lookupTxMinAmount.set($event)" name="lookupTxMinAmount" placeholder="Min" />
                   <span class="range-sep">-</span>
-                  <input type="number" class="form-input number-input" [(ngModel)]="lookupTxMaxAmount" name="lookupTxMaxAmount" placeholder="Max" />
+                  <input type="number" class="form-input number-input" [ngModel]="lookupTxMaxAmount()" (ngModelChange)="lookupTxMaxAmount.set($event)" name="lookupTxMaxAmount" placeholder="Max" />
                 </div>
               </div>
             </form>
@@ -775,6 +780,7 @@
             @else if (activeModal() === 'PIN') { 🔒 CODE D'AUTORISATION MANAGER }
             @else if (activeModal() === 'SUSPENDED') { 📂 REPRENDRE UNE TRANSACTION }
             @else if (activeModal() === 'DOCUMENT') { 📄 DOCUMENT PRINT SYSTEM }
+            @else if (activeModal() === 'PRICE_CHANGED') { ⚠️ MISE À JOUR DE TARIF }
           </span>
           <button class="modal-close" (click)="closeModal()">×</button>
         </header>
@@ -875,7 +881,7 @@
           @if (activeModal() === 'GIFT_CARD' || activeModal() === 'VOUCHER') {
             <div class="code-entry-layout">
               <p>Veuillez saisir le code barres ou le numéro d'identification :</p>
-              <input type="text" class="barcode-input" [(ngModel)]="genericCodeInput" placeholder="Ex: LMGIFT98765432" />
+              <input type="text" class="barcode-input" [ngModel]="genericCodeInput()" (ngModelChange)="genericCodeInput.set($event)" placeholder="Ex: LMGIFT98765432" />
               <button class="modal-submit-btn" (click)="activeModal() === 'GIFT_CARD' ? submitGiftCardPayment() : submitVoucherPayment()">
                 Valider & Déduire
               </button>
@@ -1115,6 +1121,50 @@
                   <p style="margin-top: 8px;">Merci pour votre confiance. À bientôt chez Leroy Merlin !</p>
                 </div>
               </div>
+            </div>
+          }
+
+          <!-- 9. PRICE CHANGED DETECTED MODAL -->
+          @if (activeModal() === 'PRICE_CHANGED' && priceChangeDetails()) {
+            <div class="price-change-layout">
+              <div class="warning-banner">
+                <span class="warning-icon">⚠️</span>
+                <div>
+                  <strong>Synchronisation de tarification active</strong>
+                  <p style="margin: 4px 0 0 0; font-size: 12px; color: #856404; font-weight: 400; line-height: 1.4;">
+                    Une divergence de prix a été identifiée et corrigée automatiquement via le service Quotation.
+                  </p>
+                </div>
+              </div>
+
+              <div class="price-details-card">
+                <div class="product-info">
+                  <div class="product-title">{{ priceChangeDetails()?.productName }}</div>
+                  <div class="product-barcode-val">Code barre: {{ priceChangeDetails()?.barcode }}</div>
+                </div>
+
+                <div class="price-comparison">
+                  <div class="price-box old-price">
+                    <span class="price-label">Ancien prix</span>
+                    <span class="price-value">{{ priceChangeDetails()?.oldPrice | number:'1.2-2' }} €</span>
+                  </div>
+
+                  <div class="comparison-arrow">➔</div>
+
+                  <div class="price-box new-price">
+                    <span class="price-label">Nouveau prix</span>
+                    <span class="price-value">{{ priceChangeDetails()?.newPrice | number:'1.2-2' }} €</span>
+                  </div>
+                </div>
+              </div>
+
+              <p class="modal-desc">
+                Le prix de vente de cet article a été actualisé dans le panier et dans la base de données locale du magasin conformément aux tarifs du siège.
+              </p>
+
+              <button class="modal-submit-btn" (click)="closeModal()">
+                Confirmer et continuer
+              </button>
             </div>
           }
         </div>

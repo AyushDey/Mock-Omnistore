@@ -33,4 +33,11 @@ public class TransactionItem {
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
+
+    @Transient
+    @Builder.Default
+    private Boolean priceChanged = false;
+
+    @Transient
+    private BigDecimal oldPrice;
 }

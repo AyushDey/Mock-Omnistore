@@ -30,7 +30,7 @@ libpeerconnection.log
 testem.log
 typings/
 __screenshots__/
-
+__pycache__
 # --- IDEs and Editors ---
 .idea/
 *.suo

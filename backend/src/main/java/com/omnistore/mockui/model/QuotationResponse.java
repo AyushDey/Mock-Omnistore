@@ -20,4 +20,5 @@ public class QuotationResponse {
     private BigDecimal taxRate;
     private String imageUrl;
     private String description;
+    private Boolean priceChanged;
 }

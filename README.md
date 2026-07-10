@@ -48,7 +48,21 @@ CREATE DATABASE quotation;
 > - `backend/src/main/resources/application.properties`
 > - `Quotation/src/main/resources/application.properties`
 
-### 2. Start the Quotation API (Port 8081)
+### 2. Quick Start - Run All Components (Recommended)
+You can run all components automatically using the provided startup scripts. These will validate your environment, run `npm install` if necessary, and launch each component in its own separate window.
+
+*   **Using Command Prompt / Double-click:**
+    ```cmd
+    start-all.bat
+    ```
+*   **Using PowerShell:**
+    ```powershell
+    .\start-all.ps1
+    ```
+
+---
+
+### 3. Manual Start: Quotation API (Port 8081)
 Open a terminal in the project root directory and run:
 ```bash
 cd Quotation
@@ -56,7 +70,7 @@ cd Quotation
 ```
 *Verify it is running by visiting [http://localhost:8081/api/quotation](http://localhost:8081/api/quotation) (should return a JSON array of 6 products).*
 
-### 3. Start the Omnistore Backend (Port 8080)
+### 4. Manual Start: Omnistore Backend (Port 8080)
 Open a new terminal window in the project root directory and run:
 ```bash
 cd backend
@@ -64,7 +78,7 @@ cd backend
 ```
 *Verify it is running by visiting [http://localhost:8080/api/products](http://localhost:8080/api/products).*
 
-### 4. Start the Frontend App (Port 4200)
+### 5. Manual Start: Frontend App (Port 4200)
 Open a new terminal window in the project root directory and run:
 ```bash
 cd frontend
@@ -140,3 +154,76 @@ npm test
 | **Port already in use** | Find and kill the process using port `8080`, `8081`, or `4200`, or reconfigure ports in `application.properties`. |
 | **Quotation API Offline** | Backend will log a fallback warning and continue using the cached database price. |
 | **CORS / Frontend API errors** | Verify backend is running on port `8080`. |
+
+<!-- ARCHITECTURE-DOCS:START -->
+## 🗺️ Architecture & Developer Navigation
+
+This repository is organized as a multi-service application containing an **Angular frontend client**, a **Spring Boot Backend API**, and a **Spring Boot Quotation Microservice**. 
+
+### 🚀 Where to Start?
+* **First Time Here?** Read the [Developer Onboarding Guide](docs/generated/onboarding.md) to set up the project and run tests.
+* **Want to understand the code structure?** Review the [System Overview](docs/generated/system-overview.md) to see how modules, routes, and entities map.
+* **Architectural Review?** Check the [Architecture Review](docs/generated/architecture-review.md) for code quality indicators and coupling analyses.
+
+---
+
+### 📂 Repository Documentation Index
+
+| Component / Document | Description | Key Reference Diagrams |
+| :--- | :--- | :--- |
+| 📄 [Architecture Overview](docs/generated/architecture.md) | High-level system goals, technologies & stacks | 🗺️ [UML Component Diagram](docs/generated/diagrams/component-diagram.md) |
+| 📄 [System Overview](docs/generated/system-overview.md) | Discovered codebase modules, API endpoints & schemas | 🔄 [UML Sequence Diagram](docs/generated/diagrams/sequence-diagrams.md) |
+| 📄 [Components & Classes](docs/generated/components.md) | Full catalog of identified classes and methods | 🏷️ [UML Class Diagram Index](docs/generated/diagrams/class-diagram.md) |
+| 📄 [API Reference](docs/generated/api-reference.md) | Dynamic list of REST endpoint routing details | 🗄️ [UML ER Diagram](docs/generated/diagrams/er-diagram.md) |
+| 📄 [Onboarding Guide](docs/generated/onboarding.md) | Local environment startup and testing commands | |
+| 📄 [Architecture Review](docs/generated/architecture-review.md) | Large classes list, coupling warnings & recommendations | |
+
+---
+
+### 🗺️ High-Level Component Flow
+
+```mermaid
+flowchart TD
+    User["User / Web Browser"]
+
+    subgraph Frontend["Frontend App (Angular Client)"]
+        UI["Angular Components"]
+        ServiceJS["TransactionService"]
+    end
+
+    subgraph Backend["Omnistore Backend API (Spring Boot)"]
+        TransController["TransactionController"]
+        TransService["TransactionService"]
+        TransItem["TransactionItem Entity"]
+    end
+
+    subgraph QuotationService["Quotation Microservice (Spring Boot)"]
+        QuoteController["QuotationController"]
+        QuoteItem["QuotationItem Entity"]
+    end
+
+    User -->|HTTP / Port 4200| UI
+    UI -->|Uses| ServiceJS
+    ServiceJS -->|REST API / Port 8080| TransController
+    TransController -->|Delegates to| TransService
+    TransService -->|REST API / Port 8081| QuoteController
+    TransService -->|Persists| TransItem
+    QuoteController -->|Retrieves| QuoteItem
+```
+
+<details>
+<summary><b>🔍 System Metrics & Stats</b></summary>
+
+* **Discovered Modules:** 46 (Java, TypeScript, Python)
+* **Discovered Classes:** 39
+* **API Endpoints:** 17
+* **Database Entities:** 6
+* **Relationships / Couplings:** 7
+* **Codebase Language Mix:** Java (32 file(s)), TypeScript (7 file(s))
+
+_Last incremental analysis scan on 46 changed files._
+</details>
+
+> This section is auto-managed. Do not edit between the architecture documentation markers manually.
+<!-- ARCHITECTURE-DOCS:END -->
+

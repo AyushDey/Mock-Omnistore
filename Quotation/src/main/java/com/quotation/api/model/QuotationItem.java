@@ -35,4 +35,8 @@ public class QuotationItem {
 
     @Column(length = 500)
     private String description;
+
+    @Transient
+    @Builder.Default
+    private Boolean priceChanged = false;
 }

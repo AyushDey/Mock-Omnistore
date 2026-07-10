@@ -17,6 +17,8 @@ export interface TransactionItem {
   product: Product;
   quantity: number;
   price: number;
+  priceChanged?: boolean;
+  oldPrice?: number;
 }
 
 export interface Payment {

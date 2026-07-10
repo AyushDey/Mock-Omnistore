@@ -1,0 +1,3261 @@
+{
+  "analysis": {
+    "classes": [
+      {
+        "annotations": [
+          "Configuration"
+        ],
+        "bases": [],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/CorsConfig.java",
+        "fields": [],
+        "file": "backend/src/main/java/com/omnistore/mockui/config/CorsConfig.java",
+        "kind": "class",
+        "language": "Java",
+        "layer": "configuration",
+        "methods": [
+          "addCorsMappings",
+          "corsConfigurer"
+        ],
+        "name": "CorsConfig"
+      },
+      {
+        "annotations": [
+          "Component"
+        ],
+        "bases": [
+          "CommandLineRunner"
+        ],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "fields": [
+          "productRepository",
+          "transactionRepository"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "class",
+        "language": "Java",
+        "layer": "configuration",
+        "methods": [
+          "recalculateTotals",
+          "run"
+        ],
+        "name": "DatabaseSeeder"
+      },
+      {
+        "annotations": [
+          "Configuration"
+        ],
+        "bases": [],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/QuotationClientConfig.java",
+        "fields": [
+          "quotationApiBaseUrl"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/config/QuotationClientConfig.java",
+        "kind": "class",
+        "language": "Java",
+        "layer": "configuration",
+        "methods": [
+          "quotationWebClient"
+        ],
+        "name": "QuotationClientConfig"
+      },
+      {
+        "annotations": [
+          "RestController",
+          "RequestMapping"
+        ],
+        "bases": [],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "fields": [
+          "productService"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "kind": "controller",
+        "language": "Java",
+        "layer": "api",
+        "methods": [
+          "create",
+          "getByBarcode",
+          "listAll",
+          "search"
+        ],
+        "name": "ProductController"
+      },
+      {
+        "annotations": [
+          "RestController",
+          "RequestMapping"
+        ],
+        "bases": [],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "fields": [
+          "transactionService"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "kind": "controller",
+        "language": "Java",
+        "layer": "api",
+        "methods": [
+          "abandon",
+          "addItem",
+          "getActive",
+          "getAll",
+          "getSuspended",
+          "pay",
+          "removeItem",
+          "resume",
+          "suspend",
+          "toggleInvoice",
+          "updateItemQuantity"
+        ],
+        "name": "TransactionController"
+      },
+      {
+        "annotations": [
+          "SpringBootApplication"
+        ],
+        "bases": [],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/MockOmnistoreUiApplication.java",
+        "fields": [],
+        "file": "backend/src/main/java/com/omnistore/mockui/MockOmnistoreUiApplication.java",
+        "kind": "class",
+        "language": "Java",
+        "layer": "application",
+        "methods": [
+          "main"
+        ],
+        "name": "MockOmnistoreUiApplication"
+      },
+      {
+        "annotations": [
+          "Entity",
+          "Table",
+          "Getter",
+          "Setter",
+          "NoArgsConstructor",
+          "AllArgsConstructor",
+          "Builder"
+        ],
+        "bases": [],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "fields": [
+          "amount",
+          "createdAt",
+          "id",
+          "method",
+          "transaction"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "kind": "entity",
+        "language": "Java",
+        "layer": "domain",
+        "methods": [
+          "onCreate"
+        ],
+        "name": "Payment"
+      },
+      {
+        "annotations": [],
+        "bases": [],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/PaymentMethod.java",
+        "fields": [],
+        "file": "backend/src/main/java/com/omnistore/mockui/model/PaymentMethod.java",
+        "kind": "enum",
+        "language": "Java",
+        "layer": "domain",
+        "methods": [],
+        "name": "PaymentMethod"
+      },
+      {
+        "annotations": [
+          "Entity",
+          "Table",
+          "Getter",
+          "Setter",
+          "NoArgsConstructor",
+          "AllArgsConstructor",
+          "Builder"
+        ],
+        "bases": [],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Product.java",
+        "fields": [
+          "barcode",
+          "id",
+          "imageUrl",
+          "name",
+          "price",
+          "taxRate"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/model/Product.java",
+        "kind": "entity",
+        "language": "Java",
+        "layer": "domain",
+        "methods": [],
+        "name": "Product"
+      },
+      {
+        "annotations": [
+          "Getter",
+          "Setter",
+          "NoArgsConstructor",
+          "AllArgsConstructor",
+          "Builder"
+        ],
+        "bases": [],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/QuotationResponse.java",
+        "fields": [
+          "barcode",
+          "description",
+          "imageUrl",
+          "name",
+          "price",
+          "priceChanged",
+          "taxRate"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/model/QuotationResponse.java",
+        "kind": "entity",
+        "language": "Java",
+        "layer": "domain",
+        "methods": [],
+        "name": "QuotationResponse"
+      },
+      {
+        "annotations": [
+          "Entity",
+          "Table",
+          "Getter",
+          "Setter",
+          "NoArgsConstructor",
+          "AllArgsConstructor",
+          "Builder"
+        ],
+        "bases": [],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "fields": [
+          "createdAt",
+          "discountAmount",
+          "id",
+          "invoiceRequired",
+          "items",
+          "payments",
+          "status",
+          "taxAmount",
+          "totalAmount",
+          "updatedAt"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "kind": "entity",
+        "language": "Java",
+        "layer": "domain",
+        "methods": [
+          "onCreate",
+          "onUpdate"
+        ],
+        "name": "Transaction"
+      },
+      {
+        "annotations": [
+          "Entity",
+          "Table",
+          "Getter",
+          "Setter",
+          "NoArgsConstructor",
+          "AllArgsConstructor",
+          "Builder"
+        ],
+        "bases": [],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+        "fields": [
+          "id",
+          "oldPrice",
+          "price",
+          "priceChanged",
+          "product",
+          "quantity",
+          "transaction"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+        "kind": "entity",
+        "language": "Java",
+        "layer": "domain",
+        "methods": [],
+        "name": "TransactionItem"
+      },
+      {
+        "annotations": [],
+        "bases": [],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/TransactionStatus.java",
+        "fields": [],
+        "file": "backend/src/main/java/com/omnistore/mockui/model/TransactionStatus.java",
+        "kind": "enum",
+        "language": "Java",
+        "layer": "domain",
+        "methods": [],
+        "name": "TransactionStatus"
+      },
+      {
+        "annotations": [
+          "Repository"
+        ],
+        "bases": [
+          "JpaRepository"
+        ],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/PaymentRepository.java",
+        "fields": [],
+        "file": "backend/src/main/java/com/omnistore/mockui/repository/PaymentRepository.java",
+        "kind": "interface",
+        "language": "Java",
+        "layer": "persistence",
+        "methods": [],
+        "name": "PaymentRepository"
+      },
+      {
+        "annotations": [
+          "Repository"
+        ],
+        "bases": [
+          "JpaRepository"
+        ],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "fields": [],
+        "file": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "kind": "interface",
+        "language": "Java",
+        "layer": "persistence",
+        "methods": [],
+        "name": "ProductRepository"
+      },
+      {
+        "annotations": [
+          "Repository"
+        ],
+        "bases": [
+          "JpaRepository"
+        ],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/TransactionItemRepository.java",
+        "fields": [],
+        "file": "backend/src/main/java/com/omnistore/mockui/repository/TransactionItemRepository.java",
+        "kind": "interface",
+        "language": "Java",
+        "layer": "persistence",
+        "methods": [],
+        "name": "TransactionItemRepository"
+      },
+      {
+        "annotations": [
+          "Repository"
+        ],
+        "bases": [
+          "JpaRepository"
+        ],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "fields": [],
+        "file": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "kind": "interface",
+        "language": "Java",
+        "layer": "persistence",
+        "methods": [],
+        "name": "TransactionRepository"
+      },
+      {
+        "annotations": [
+          "Service",
+          "Transactional"
+        ],
+        "bases": [],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "fields": [
+          "productRepository"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "kind": "service",
+        "language": "Java",
+        "layer": "service",
+        "methods": [
+          "getProductByBarcode",
+          "getProductById",
+          "listAllProducts",
+          "saveProduct",
+          "searchProducts"
+        ],
+        "name": "ProductService"
+      },
+      {
+        "annotations": [
+          "Service",
+          "Transactional"
+        ],
+        "bases": [],
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "fields": [
+          "log",
+          "productRepository",
+          "quotationWebClient",
+          "transactionItemRepository",
+          "transactionRepository"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "service",
+        "language": "Java",
+        "layer": "service",
+        "methods": [
+          "abandonActiveTransaction",
+          "addItemToActiveTransaction",
+          "addPaymentToActiveTransaction",
+          "getActiveTransaction",
+          "listAllTransactions",
+          "listSuspendedTransactions",
+          "recalculateTotals",
+          "removeItem",
+          "resumeTransaction",
+          "setInvoiceRequired",
+          "suspendActiveTransaction",
+          "updateItemQuantity"
+        ],
+        "name": "TransactionService"
+      },
+      {
+        "annotations": [
+          "WebMvcTest",
+          "SuppressWarnings"
+        ],
+        "bases": [],
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "fields": [
+          "mockMvc",
+          "product1",
+          "product2",
+          "productService"
+        ],
+        "file": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "controller",
+        "language": "Java",
+        "layer": "api",
+        "methods": [],
+        "name": "ProductControllerTest"
+      },
+      {
+        "annotations": [
+          "WebMvcTest",
+          "SuppressWarnings"
+        ],
+        "bases": [],
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "fields": [
+          "itemId",
+          "mockMvc",
+          "transaction",
+          "transactionId",
+          "transactionService"
+        ],
+        "file": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "controller",
+        "language": "Java",
+        "layer": "api",
+        "methods": [],
+        "name": "TransactionControllerTest"
+      },
+      {
+        "annotations": [
+          "ExtendWith"
+        ],
+        "bases": [],
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "fields": [
+          "product1",
+          "product2",
+          "productRepository",
+          "productService"
+        ],
+        "file": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "service",
+        "language": "Java",
+        "layer": "service",
+        "methods": [],
+        "name": "ProductServiceTest"
+      },
+      {
+        "annotations": [
+          "ExtendWith",
+          "SuppressWarnings"
+        ],
+        "bases": [],
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "fields": [
+          "activeTransaction",
+          "product1",
+          "product2",
+          "productRepository",
+          "quotationWebClient",
+          "requestHeadersSpec",
+          "requestHeadersUriSpec",
+          "responseSpec",
+          "transactionItemRepository",
+          "transactionRepository",
+          "transactionService"
+        ],
+        "file": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "service",
+        "language": "Java",
+        "layer": "service",
+        "methods": [
+          "mockQuotationApiFailure",
+          "mockQuotationApiResponse"
+        ],
+        "name": "TransactionServiceTest"
+      },
+      {
+        "bases": [],
+        "evidence": "frontend/src/app/app.ts",
+        "fields": [],
+        "file": "frontend/src/app/app.ts",
+        "kind": "class",
+        "language": "TypeScript",
+        "layer": "application",
+        "methods": [],
+        "name": "App"
+      },
+      {
+        "bases": [],
+        "evidence": "frontend/src/app/app.ts",
+        "fields": [],
+        "file": "frontend/src/app/app.ts",
+        "kind": "interface",
+        "language": "TypeScript",
+        "layer": "application",
+        "methods": [],
+        "name": "Toast"
+      },
+      {
+        "bases": [],
+        "evidence": "frontend/src/app/transaction.service.ts",
+        "fields": [],
+        "file": "frontend/src/app/transaction.service.ts",
+        "kind": "service",
+        "language": "TypeScript",
+        "layer": "service",
+        "methods": [
+          "loadActiveTransaction",
+          "loadAllTransactions",
+          "loadSuspendedTransactions",
+          "removeItem",
+          "scanAndAddItem",
+          "suspendTransaction",
+          "tap",
+          "updateItemQuantity"
+        ],
+        "name": "TransactionService"
+      },
+      {
+        "bases": [],
+        "evidence": "frontend/src/app/transaction.service.ts",
+        "fields": [],
+        "file": "frontend/src/app/transaction.service.ts",
+        "kind": "interface",
+        "language": "TypeScript",
+        "layer": "service",
+        "methods": [],
+        "name": "Product"
+      },
+      {
+        "bases": [],
+        "evidence": "frontend/src/app/transaction.service.ts",
+        "fields": [],
+        "file": "frontend/src/app/transaction.service.ts",
+        "kind": "interface",
+        "language": "TypeScript",
+        "layer": "service",
+        "methods": [],
+        "name": "TransactionItem"
+      },
+      {
+        "bases": [],
+        "evidence": "frontend/src/app/transaction.service.ts",
+        "fields": [],
+        "file": "frontend/src/app/transaction.service.ts",
+        "kind": "interface",
+        "language": "TypeScript",
+        "layer": "service",
+        "methods": [],
+        "name": "Payment"
+      },
+      {
+        "bases": [],
+        "evidence": "frontend/src/app/transaction.service.ts",
+        "fields": [],
+        "file": "frontend/src/app/transaction.service.ts",
+        "kind": "interface",
+        "language": "TypeScript",
+        "layer": "service",
+        "methods": [],
+        "name": "Transaction"
+      },
+      {
+        "annotations": [
+          "Configuration"
+        ],
+        "bases": [],
+        "evidence": "Quotation/src/main/java/com/quotation/api/config/CorsConfig.java",
+        "fields": [],
+        "file": "Quotation/src/main/java/com/quotation/api/config/CorsConfig.java",
+        "kind": "class",
+        "language": "Java",
+        "layer": "configuration",
+        "methods": [
+          "addCorsMappings",
+          "corsConfigurer"
+        ],
+        "name": "CorsConfig"
+      },
+      {
+        "annotations": [
+          "Component"
+        ],
+        "bases": [
+          "CommandLineRunner"
+        ],
+        "evidence": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "fields": [
+          "quotationItemRepository"
+        ],
+        "file": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "kind": "class",
+        "language": "Java",
+        "layer": "configuration",
+        "methods": [
+          "run"
+        ],
+        "name": "QuotationSeeder"
+      },
+      {
+        "annotations": [
+          "RestController",
+          "RequestMapping"
+        ],
+        "bases": [],
+        "evidence": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "fields": [
+          "log",
+          "quotationService"
+        ],
+        "file": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "kind": "controller",
+        "language": "Java",
+        "layer": "api",
+        "methods": [
+          "getAll",
+          "getByBarcode",
+          "search"
+        ],
+        "name": "QuotationController"
+      },
+      {
+        "annotations": [
+          "Entity",
+          "Table",
+          "Getter",
+          "Setter",
+          "NoArgsConstructor",
+          "AllArgsConstructor",
+          "Builder"
+        ],
+        "bases": [],
+        "evidence": "Quotation/src/main/java/com/quotation/api/model/QuotationItem.java",
+        "fields": [
+          "barcode",
+          "description",
+          "id",
+          "imageUrl",
+          "name",
+          "price",
+          "priceChanged",
+          "taxRate"
+        ],
+        "file": "Quotation/src/main/java/com/quotation/api/model/QuotationItem.java",
+        "kind": "entity",
+        "language": "Java",
+        "layer": "domain",
+        "methods": [],
+        "name": "QuotationItem"
+      },
+      {
+        "annotations": [
+          "SpringBootApplication"
+        ],
+        "bases": [],
+        "evidence": "Quotation/src/main/java/com/quotation/api/QuotationApiApplication.java",
+        "fields": [],
+        "file": "Quotation/src/main/java/com/quotation/api/QuotationApiApplication.java",
+        "kind": "class",
+        "language": "Java",
+        "layer": "application",
+        "methods": [
+          "main"
+        ],
+        "name": "QuotationApiApplication"
+      },
+      {
+        "annotations": [
+          "Repository"
+        ],
+        "bases": [
+          "JpaRepository"
+        ],
+        "evidence": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "fields": [],
+        "file": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "kind": "interface",
+        "language": "Java",
+        "layer": "persistence",
+        "methods": [],
+        "name": "QuotationItemRepository"
+      },
+      {
+        "annotations": [
+          "Service",
+          "Transactional"
+        ],
+        "bases": [],
+        "evidence": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "fields": [
+          "quotationItemRepository"
+        ],
+        "file": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "kind": "service",
+        "language": "Java",
+        "layer": "service",
+        "methods": [
+          "getAll",
+          "getByBarcode",
+          "getById",
+          "search"
+        ],
+        "name": "QuotationService"
+      },
+      {
+        "annotations": [
+          "WebMvcTest",
+          "SuppressWarnings"
+        ],
+        "bases": [],
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "fields": [
+          "item1",
+          "item2",
+          "mockMvc",
+          "quotationService"
+        ],
+        "file": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "controller",
+        "language": "Java",
+        "layer": "api",
+        "methods": [],
+        "name": "QuotationControllerTest"
+      },
+      {
+        "annotations": [
+          "ExtendWith"
+        ],
+        "bases": [],
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "fields": [
+          "item1",
+          "item2",
+          "quotationItemRepository",
+          "quotationService"
+        ],
+        "file": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "service",
+        "language": "Java",
+        "layer": "service",
+        "methods": [],
+        "name": "QuotationServiceTest"
+      }
+    ],
+    "dependencies": [
+      {
+        "ecosystem": "npm",
+        "evidence": "frontend/package.json",
+        "file": "frontend/package.json",
+        "name": "@angular/common",
+        "section": "dependencies",
+        "version": "^21.2.0"
+      },
+      {
+        "ecosystem": "npm",
+        "evidence": "frontend/package.json",
+        "file": "frontend/package.json",
+        "name": "@angular/compiler",
+        "section": "dependencies",
+        "version": "^21.2.0"
+      },
+      {
+        "ecosystem": "npm",
+        "evidence": "frontend/package.json",
+        "file": "frontend/package.json",
+        "name": "@angular/core",
+        "section": "dependencies",
+        "version": "^21.2.0"
+      },
+      {
+        "ecosystem": "npm",
+        "evidence": "frontend/package.json",
+        "file": "frontend/package.json",
+        "name": "@angular/forms",
+        "section": "dependencies",
+        "version": "^21.2.0"
+      },
+      {
+        "ecosystem": "npm",
+        "evidence": "frontend/package.json",
+        "file": "frontend/package.json",
+        "name": "@angular/platform-browser",
+        "section": "dependencies",
+        "version": "^21.2.0"
+      },
+      {
+        "ecosystem": "npm",
+        "evidence": "frontend/package.json",
+        "file": "frontend/package.json",
+        "name": "@angular/router",
+        "section": "dependencies",
+        "version": "^21.2.0"
+      },
+      {
+        "ecosystem": "npm",
+        "evidence": "frontend/package.json",
+        "file": "frontend/package.json",
+        "name": "rxjs",
+        "section": "dependencies",
+        "version": "~7.8.0"
+      },
+      {
+        "ecosystem": "npm",
+        "evidence": "frontend/package.json",
+        "file": "frontend/package.json",
+        "name": "tslib",
+        "section": "dependencies",
+        "version": "^2.3.0"
+      },
+      {
+        "ecosystem": "npm",
+        "evidence": "frontend/package.json",
+        "file": "frontend/package.json",
+        "name": "@angular/build",
+        "section": "devDependencies",
+        "version": "^21.2.12"
+      },
+      {
+        "ecosystem": "npm",
+        "evidence": "frontend/package.json",
+        "file": "frontend/package.json",
+        "name": "@angular/cli",
+        "section": "devDependencies",
+        "version": "^21.2.12"
+      },
+      {
+        "ecosystem": "npm",
+        "evidence": "frontend/package.json",
+        "file": "frontend/package.json",
+        "name": "@angular/compiler-cli",
+        "section": "devDependencies",
+        "version": "^21.2.0"
+      },
+      {
+        "ecosystem": "npm",
+        "evidence": "frontend/package.json",
+        "file": "frontend/package.json",
+        "name": "jsdom",
+        "section": "devDependencies",
+        "version": "^28.0.0"
+      },
+      {
+        "ecosystem": "npm",
+        "evidence": "frontend/package.json",
+        "file": "frontend/package.json",
+        "name": "prettier",
+        "section": "devDependencies",
+        "version": "^3.8.1"
+      },
+      {
+        "ecosystem": "npm",
+        "evidence": "frontend/package.json",
+        "file": "frontend/package.json",
+        "name": "typescript",
+        "section": "devDependencies",
+        "version": "~5.9.2"
+      },
+      {
+        "ecosystem": "npm",
+        "evidence": "frontend/package.json",
+        "file": "frontend/package.json",
+        "name": "vitest",
+        "section": "devDependencies",
+        "version": "^4.0.8"
+      }
+    ],
+    "entities": [
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "fields": [
+          "amount",
+          "createdAt",
+          "id",
+          "method",
+          "transaction"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "name": "Payment",
+        "source": "java-entity-heuristic"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Product.java",
+        "fields": [
+          "barcode",
+          "id",
+          "imageUrl",
+          "name",
+          "price",
+          "taxRate"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/model/Product.java",
+        "name": "Product",
+        "source": "java-entity-heuristic"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/QuotationResponse.java",
+        "fields": [
+          "barcode",
+          "description",
+          "imageUrl",
+          "name",
+          "price",
+          "priceChanged",
+          "taxRate"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/model/QuotationResponse.java",
+        "name": "QuotationResponse",
+        "source": "java-entity-heuristic"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "fields": [
+          "createdAt",
+          "discountAmount",
+          "id",
+          "invoiceRequired",
+          "items",
+          "payments",
+          "status",
+          "taxAmount",
+          "totalAmount",
+          "updatedAt"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "name": "Transaction",
+        "source": "java-entity-heuristic"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+        "fields": [
+          "id",
+          "oldPrice",
+          "price",
+          "priceChanged",
+          "product",
+          "quantity",
+          "transaction"
+        ],
+        "file": "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+        "name": "TransactionItem",
+        "source": "java-entity-heuristic"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/model/QuotationItem.java",
+        "fields": [
+          "barcode",
+          "description",
+          "id",
+          "imageUrl",
+          "name",
+          "price",
+          "priceChanged",
+          "taxRate"
+        ],
+        "file": "Quotation/src/main/java/com/quotation/api/model/QuotationItem.java",
+        "name": "QuotationItem",
+        "source": "java-entity-heuristic"
+      }
+    ],
+    "functions": [],
+    "imports": [
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/CorsConfig.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/CorsConfig.java",
+        "target": "org.springframework.context.annotation.Bean"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/CorsConfig.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/CorsConfig.java",
+        "target": "org.springframework.context.annotation.Configuration"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/CorsConfig.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/CorsConfig.java",
+        "target": "org.springframework.lang.NonNull"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/CorsConfig.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/CorsConfig.java",
+        "target": "org.springframework.web.servlet.config.annotation.CorsRegistry"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/CorsConfig.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/CorsConfig.java",
+        "target": "org.springframework.web.servlet.config.annotation.WebMvcConfigurer"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "com.omnistore.mockui.model.Product"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "com.omnistore.mockui.model.Transaction"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "com.omnistore.mockui.model.TransactionItem"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "com.omnistore.mockui.model.TransactionStatus"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "com.omnistore.mockui.repository.ProductRepository"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "com.omnistore.mockui.repository.TransactionRepository"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "org.springframework.beans.factory.annotation.Autowired"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "org.springframework.boot.CommandLineRunner"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "org.springframework.lang.NonNull"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "org.springframework.stereotype.Component"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "java.math.RoundingMode"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "java.util.ArrayList"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "java.util.List"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "java.util.Optional"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/QuotationClientConfig.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/QuotationClientConfig.java",
+        "target": "org.springframework.beans.factory.annotation.Value"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/QuotationClientConfig.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/QuotationClientConfig.java",
+        "target": "org.springframework.context.annotation.Bean"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/QuotationClientConfig.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/QuotationClientConfig.java",
+        "target": "org.springframework.context.annotation.Configuration"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/QuotationClientConfig.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/config/QuotationClientConfig.java",
+        "target": "org.springframework.web.reactive.function.client.WebClient"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "target": "com.omnistore.mockui.model.Product"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "target": "com.omnistore.mockui.service.ProductService"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "target": "org.springframework.beans.factory.annotation.Autowired"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "target": "org.springframework.http.ResponseEntity"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "target": "org.springframework.web.bind.annotation.*"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "target": "java.util.List"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "target": "com.omnistore.mockui.model.PaymentMethod"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "target": "com.omnistore.mockui.model.Transaction"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "target": "com.omnistore.mockui.service.TransactionService"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "target": "org.springframework.beans.factory.annotation.Autowired"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "target": "org.springframework.web.bind.annotation.*"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "target": "java.util.List"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/MockOmnistoreUiApplication.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/MockOmnistoreUiApplication.java",
+        "target": "org.springframework.boot.SpringApplication"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/MockOmnistoreUiApplication.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/MockOmnistoreUiApplication.java",
+        "target": "org.springframework.boot.autoconfigure.SpringBootApplication"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "target": "com.fasterxml.jackson.annotation.JsonIgnore"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "target": "jakarta.persistence.*"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "target": "lombok.*"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "target": "java.time.LocalDateTime"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Product.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Product.java",
+        "target": "jakarta.persistence.*"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Product.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Product.java",
+        "target": "lombok.*"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Product.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Product.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Product.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Product.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/QuotationResponse.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/QuotationResponse.java",
+        "target": "lombok.*"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/QuotationResponse.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/QuotationResponse.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "target": "jakarta.persistence.*"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "target": "lombok.*"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "target": "java.time.LocalDateTime"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "target": "java.util.ArrayList"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "target": "java.util.List"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+        "target": "com.fasterxml.jackson.annotation.JsonIgnore"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+        "target": "jakarta.persistence.*"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+        "target": "lombok.*"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/PaymentRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/PaymentRepository.java",
+        "target": "com.omnistore.mockui.model.Payment"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/PaymentRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/PaymentRepository.java",
+        "target": "org.springframework.data.jpa.repository.JpaRepository"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/PaymentRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/PaymentRepository.java",
+        "target": "org.springframework.stereotype.Repository"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/PaymentRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/PaymentRepository.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "target": "com.omnistore.mockui.model.Product"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "target": "org.springframework.data.jpa.repository.JpaRepository"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "target": "org.springframework.stereotype.Repository"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "target": "java.util.List"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "target": "java.util.Optional"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/TransactionItemRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/TransactionItemRepository.java",
+        "target": "com.omnistore.mockui.model.TransactionItem"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/TransactionItemRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/TransactionItemRepository.java",
+        "target": "org.springframework.data.jpa.repository.JpaRepository"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/TransactionItemRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/TransactionItemRepository.java",
+        "target": "org.springframework.stereotype.Repository"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/TransactionItemRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/TransactionItemRepository.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "target": "com.omnistore.mockui.model.Transaction"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "target": "com.omnistore.mockui.model.TransactionStatus"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "target": "org.springframework.data.jpa.repository.JpaRepository"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "target": "org.springframework.stereotype.Repository"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "target": "java.util.List"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "target": "java.util.Optional"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "target": "com.omnistore.mockui.model.Product"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "target": "com.omnistore.mockui.repository.ProductRepository"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "target": "org.springframework.beans.factory.annotation.Autowired"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "target": "org.springframework.stereotype.Service"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "target": "org.springframework.transaction.annotation.Transactional"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "target": "java.util.List"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "target": "java.util.Optional"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "com.omnistore.mockui.model.*"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "com.omnistore.mockui.repository.ProductRepository"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "com.omnistore.mockui.repository.TransactionItemRepository"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "com.omnistore.mockui.repository.TransactionRepository"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "org.slf4j.Logger"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "org.slf4j.LoggerFactory"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "org.springframework.beans.factory.annotation.Autowired"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "org.springframework.stereotype.Service"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "org.springframework.transaction.annotation.Transactional"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "org.springframework.web.reactive.function.client.WebClient"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "java.math.RoundingMode"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "java.time.Duration"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "java.util.ArrayList"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "java.util.List"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "java.util.Optional"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "kind": "import",
+        "source": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "com.omnistore.mockui.model.Product"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "com.omnistore.mockui.service.ProductService"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "org.junit.jupiter.api.BeforeEach"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "org.junit.jupiter.api.Test"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "org.springframework.beans.factory.annotation.Autowired"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "org.springframework.boot.test.mock.mockito.MockBean"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "org.springframework.http.MediaType"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "org.springframework.test.web.servlet.MockMvc"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "java.util.Arrays"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "java.util.Collections"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "java.util.Optional"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "org.hamcrest.Matchers.hasSize"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "org.hamcrest.Matchers.is"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "org.mockito.Mockito.*"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "target": "org.springframework.test.web.servlet.result.MockMvcResultMatchers.status"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "com.omnistore.mockui.model.PaymentMethod"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "com.omnistore.mockui.model.Transaction"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "com.omnistore.mockui.model.TransactionStatus"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "com.omnistore.mockui.service.TransactionService"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "org.junit.jupiter.api.BeforeEach"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "org.junit.jupiter.api.Test"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "org.springframework.beans.factory.annotation.Autowired"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "org.springframework.boot.test.mock.mockito.MockBean"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "org.springframework.http.MediaType"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "org.springframework.test.web.servlet.MockMvc"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "java.util.ArrayList"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "java.util.Collections"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "org.hamcrest.Matchers.hasSize"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "org.hamcrest.Matchers.is"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "org.mockito.Mockito.*"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "target": "org.springframework.test.web.servlet.result.MockMvcResultMatchers.status"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "com.omnistore.mockui.model.Product"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "com.omnistore.mockui.repository.ProductRepository"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "com.omnistore.mockui.service.ProductService"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "org.junit.jupiter.api.BeforeEach"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "org.junit.jupiter.api.Test"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "org.junit.jupiter.api.extension.ExtendWith"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "org.mockito.InjectMocks"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "org.mockito.Mock"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "org.mockito.junit.jupiter.MockitoExtension"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "java.util.Arrays"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "java.util.List"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "java.util.Optional"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "org.junit.jupiter.api.Assertions.*"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "target": "org.mockito.Mockito.*"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "com.omnistore.mockui.model.*"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "com.omnistore.mockui.repository.ProductRepository"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "com.omnistore.mockui.repository.TransactionItemRepository"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "com.omnistore.mockui.repository.TransactionRepository"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "com.omnistore.mockui.service.TransactionService"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "org.junit.jupiter.api.BeforeEach"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "org.junit.jupiter.api.Test"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "org.junit.jupiter.api.extension.ExtendWith"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "org.mockito.Mock"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "org.mockito.junit.jupiter.MockitoExtension"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "org.springframework.web.reactive.function.client.WebClient"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "reactor.core.publisher.Mono"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "java.util.ArrayList"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "java.util.Optional"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "org.junit.jupiter.api.Assertions.*"
+      },
+      {
+        "evidence": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "kind": "import",
+        "source": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "target": "org.mockito.Mockito.*"
+      },
+      {
+        "evidence": "frontend/src/app/app.config.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.config.ts",
+        "target": "@angular/core"
+      },
+      {
+        "evidence": "frontend/src/app/app.config.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.config.ts",
+        "target": "@angular/router"
+      },
+      {
+        "evidence": "frontend/src/app/app.config.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.config.ts",
+        "target": "@angular/common/http"
+      },
+      {
+        "evidence": "frontend/src/app/app.config.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.config.ts",
+        "target": "./app.routes"
+      },
+      {
+        "evidence": "frontend/src/app/app.routes.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.routes.ts",
+        "target": "@angular/router"
+      },
+      {
+        "evidence": "frontend/src/app/app.spec.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.spec.ts",
+        "target": "@angular/core/testing"
+      },
+      {
+        "evidence": "frontend/src/app/app.spec.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.spec.ts",
+        "target": "@angular/common/http"
+      },
+      {
+        "evidence": "frontend/src/app/app.spec.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.spec.ts",
+        "target": "@angular/common/http/testing"
+      },
+      {
+        "evidence": "frontend/src/app/app.spec.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.spec.ts",
+        "target": "./app"
+      },
+      {
+        "evidence": "frontend/src/app/app.spec.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.spec.ts",
+        "target": "./transaction.service"
+      },
+      {
+        "evidence": "frontend/src/app/app.spec.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.spec.ts",
+        "target": "vitest"
+      },
+      {
+        "evidence": "frontend/src/app/app.spec.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.spec.ts",
+        "target": "rxjs"
+      },
+      {
+        "evidence": "frontend/src/app/app.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.ts",
+        "target": "@angular/core"
+      },
+      {
+        "evidence": "frontend/src/app/app.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.ts",
+        "target": "@angular/forms"
+      },
+      {
+        "evidence": "frontend/src/app/app.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.ts",
+        "target": "@angular/common"
+      },
+      {
+        "evidence": "frontend/src/app/app.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.ts",
+        "target": "./transaction.service"
+      },
+      {
+        "evidence": "frontend/src/app/app.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.ts",
+        "target": "rxjs"
+      },
+      {
+        "evidence": "frontend/src/app/app.ts",
+        "kind": "import",
+        "source": "frontend/src/app/app.ts",
+        "target": "rxjs/operators"
+      },
+      {
+        "evidence": "frontend/src/app/transaction.service.spec.ts",
+        "kind": "import",
+        "source": "frontend/src/app/transaction.service.spec.ts",
+        "target": "@angular/core/testing"
+      },
+      {
+        "evidence": "frontend/src/app/transaction.service.spec.ts",
+        "kind": "import",
+        "source": "frontend/src/app/transaction.service.spec.ts",
+        "target": "@angular/common/http"
+      },
+      {
+        "evidence": "frontend/src/app/transaction.service.spec.ts",
+        "kind": "import",
+        "source": "frontend/src/app/transaction.service.spec.ts",
+        "target": "@angular/common/http/testing"
+      },
+      {
+        "evidence": "frontend/src/app/transaction.service.spec.ts",
+        "kind": "import",
+        "source": "frontend/src/app/transaction.service.spec.ts",
+        "target": "./transaction.service"
+      },
+      {
+        "evidence": "frontend/src/app/transaction.service.spec.ts",
+        "kind": "import",
+        "source": "frontend/src/app/transaction.service.spec.ts",
+        "target": "vitest"
+      },
+      {
+        "evidence": "frontend/src/app/transaction.service.ts",
+        "kind": "import",
+        "source": "frontend/src/app/transaction.service.ts",
+        "target": "@angular/core"
+      },
+      {
+        "evidence": "frontend/src/app/transaction.service.ts",
+        "kind": "import",
+        "source": "frontend/src/app/transaction.service.ts",
+        "target": "@angular/common/http"
+      },
+      {
+        "evidence": "frontend/src/app/transaction.service.ts",
+        "kind": "import",
+        "source": "frontend/src/app/transaction.service.ts",
+        "target": "rxjs"
+      },
+      {
+        "evidence": "frontend/src/app/transaction.service.ts",
+        "kind": "import",
+        "source": "frontend/src/app/transaction.service.ts",
+        "target": "rxjs/operators"
+      },
+      {
+        "evidence": "frontend/src/main.ts",
+        "kind": "import",
+        "source": "frontend/src/main.ts",
+        "target": "@angular/platform-browser"
+      },
+      {
+        "evidence": "frontend/src/main.ts",
+        "kind": "import",
+        "source": "frontend/src/main.ts",
+        "target": "./app/app.config"
+      },
+      {
+        "evidence": "frontend/src/main.ts",
+        "kind": "import",
+        "source": "frontend/src/main.ts",
+        "target": "./app/app"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/config/CorsConfig.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/config/CorsConfig.java",
+        "target": "org.springframework.context.annotation.Bean"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/config/CorsConfig.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/config/CorsConfig.java",
+        "target": "org.springframework.context.annotation.Configuration"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/config/CorsConfig.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/config/CorsConfig.java",
+        "target": "org.springframework.web.servlet.config.annotation.CorsRegistry"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/config/CorsConfig.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/config/CorsConfig.java",
+        "target": "org.springframework.web.servlet.config.annotation.WebMvcConfigurer"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "target": "com.quotation.api.model.QuotationItem"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "target": "com.quotation.api.repository.QuotationItemRepository"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "target": "org.springframework.boot.CommandLineRunner"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "target": "org.springframework.stereotype.Component"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "target": "java.util.ArrayList"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "target": "java.util.List"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "target": "com.quotation.api.model.QuotationItem"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "target": "com.quotation.api.service.QuotationService"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "target": "org.slf4j.Logger"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "target": "org.slf4j.LoggerFactory"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "target": "org.springframework.beans.factory.annotation.Autowired"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "target": "org.springframework.http.ResponseEntity"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "target": "org.springframework.web.bind.annotation.*"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "target": "java.util.List"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/model/QuotationItem.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/model/QuotationItem.java",
+        "target": "jakarta.persistence.*"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/model/QuotationItem.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/model/QuotationItem.java",
+        "target": "lombok.*"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/model/QuotationItem.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/model/QuotationItem.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/model/QuotationItem.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/model/QuotationItem.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/QuotationApiApplication.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/QuotationApiApplication.java",
+        "target": "org.springframework.boot.SpringApplication"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/QuotationApiApplication.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/QuotationApiApplication.java",
+        "target": "org.springframework.boot.autoconfigure.SpringBootApplication"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "target": "com.quotation.api.model.QuotationItem"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "target": "org.springframework.data.jpa.repository.JpaRepository"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "target": "org.springframework.stereotype.Repository"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "target": "java.util.List"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "target": "java.util.Optional"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "target": "com.quotation.api.model.QuotationItem"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "target": "com.quotation.api.repository.QuotationItemRepository"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "target": "org.springframework.beans.factory.annotation.Autowired"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "target": "org.springframework.stereotype.Service"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "target": "org.springframework.transaction.annotation.Transactional"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "target": "java.util.List"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "target": "java.util.Optional"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "kind": "import",
+        "source": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "com.quotation.api.model.QuotationItem"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "com.quotation.api.service.QuotationService"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "org.junit.jupiter.api.BeforeEach"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "org.junit.jupiter.api.Test"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "org.springframework.beans.factory.annotation.Autowired"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "org.springframework.boot.test.mock.mockito.MockBean"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "org.springframework.http.MediaType"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "org.springframework.test.web.servlet.MockMvc"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "java.util.Arrays"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "java.util.Collections"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "java.util.Optional"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "org.hamcrest.Matchers.hasSize"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "org.hamcrest.Matchers.is"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "org.mockito.Mockito.*"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "target": "org.springframework.test.web.servlet.result.MockMvcResultMatchers.status"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "com.quotation.api.model.QuotationItem"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "com.quotation.api.repository.QuotationItemRepository"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "org.junit.jupiter.api.BeforeEach"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "org.junit.jupiter.api.Test"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "org.junit.jupiter.api.extension.ExtendWith"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "org.mockito.InjectMocks"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "org.mockito.Mock"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "org.mockito.junit.jupiter.MockitoExtension"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "java.math.BigDecimal"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "java.util.Arrays"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "java.util.Collections"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "java.util.List"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "java.util.Optional"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "java.util.UUID"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "org.junit.jupiter.api.Assertions.*"
+      },
+      {
+        "evidence": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "kind": "import",
+        "source": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "target": "org.mockito.Mockito.*"
+      }
+    ],
+    "modules": [
+      {
+        "file": "backend/pom.xml",
+        "language": "configuration",
+        "layer": "configuration"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/config/CorsConfig.java",
+        "language": "Java",
+        "layer": "configuration"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "language": "Java",
+        "layer": "configuration"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/config/QuotationClientConfig.java",
+        "language": "Java",
+        "layer": "configuration"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "language": "Java",
+        "layer": "api"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "language": "Java",
+        "layer": "api"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/MockOmnistoreUiApplication.java",
+        "language": "Java",
+        "layer": "application"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+        "language": "Java",
+        "layer": "domain"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/model/PaymentMethod.java",
+        "language": "Java",
+        "layer": "domain"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/model/Product.java",
+        "language": "Java",
+        "layer": "domain"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/model/QuotationResponse.java",
+        "language": "Java",
+        "layer": "domain"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+        "language": "Java",
+        "layer": "domain"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+        "language": "Java",
+        "layer": "domain"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/model/TransactionStatus.java",
+        "language": "Java",
+        "layer": "domain"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/repository/PaymentRepository.java",
+        "language": "Java",
+        "layer": "persistence"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "language": "Java",
+        "layer": "persistence"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/repository/TransactionItemRepository.java",
+        "language": "Java",
+        "layer": "persistence"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "language": "Java",
+        "layer": "persistence"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+        "language": "Java",
+        "layer": "service"
+      },
+      {
+        "file": "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+        "language": "Java",
+        "layer": "service"
+      },
+      {
+        "file": "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+        "language": "Java",
+        "layer": "api"
+      },
+      {
+        "file": "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+        "language": "Java",
+        "layer": "api"
+      },
+      {
+        "file": "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+        "language": "Java",
+        "layer": "service"
+      },
+      {
+        "file": "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+        "language": "Java",
+        "layer": "service"
+      },
+      {
+        "file": "frontend/angular.json",
+        "language": "configuration",
+        "layer": "configuration"
+      },
+      {
+        "file": "frontend/package.json",
+        "language": "Node.js manifest",
+        "layer": "configuration"
+      },
+      {
+        "file": "frontend/src/app/app.config.ts",
+        "language": "TypeScript",
+        "layer": "configuration"
+      },
+      {
+        "file": "frontend/src/app/app.routes.ts",
+        "language": "TypeScript",
+        "layer": "api"
+      },
+      {
+        "file": "frontend/src/app/app.spec.ts",
+        "language": "TypeScript",
+        "layer": "application"
+      },
+      {
+        "file": "frontend/src/app/app.ts",
+        "language": "TypeScript",
+        "layer": "application"
+      },
+      {
+        "file": "frontend/src/app/transaction.service.spec.ts",
+        "language": "TypeScript",
+        "layer": "service"
+      },
+      {
+        "file": "frontend/src/app/transaction.service.ts",
+        "language": "TypeScript",
+        "layer": "service"
+      },
+      {
+        "file": "frontend/src/main.ts",
+        "language": "TypeScript",
+        "layer": "application"
+      },
+      {
+        "file": "frontend/tsconfig.app.json",
+        "language": "configuration",
+        "layer": "configuration"
+      },
+      {
+        "file": "frontend/tsconfig.json",
+        "language": "configuration",
+        "layer": "configuration"
+      },
+      {
+        "file": "frontend/tsconfig.spec.json",
+        "language": "configuration",
+        "layer": "configuration"
+      },
+      {
+        "file": "Quotation/pom.xml",
+        "language": "configuration",
+        "layer": "configuration"
+      },
+      {
+        "file": "Quotation/src/main/java/com/quotation/api/config/CorsConfig.java",
+        "language": "Java",
+        "layer": "configuration"
+      },
+      {
+        "file": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "language": "Java",
+        "layer": "configuration"
+      },
+      {
+        "file": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "language": "Java",
+        "layer": "api"
+      },
+      {
+        "file": "Quotation/src/main/java/com/quotation/api/model/QuotationItem.java",
+        "language": "Java",
+        "layer": "domain"
+      },
+      {
+        "file": "Quotation/src/main/java/com/quotation/api/QuotationApiApplication.java",
+        "language": "Java",
+        "layer": "application"
+      },
+      {
+        "file": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "language": "Java",
+        "layer": "persistence"
+      },
+      {
+        "file": "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+        "language": "Java",
+        "layer": "service"
+      },
+      {
+        "file": "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+        "language": "Java",
+        "layer": "api"
+      },
+      {
+        "file": "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+        "language": "Java",
+        "layer": "service"
+      }
+    ],
+    "relationships": [
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+        "source": "DatabaseSeeder",
+        "target": "CommandLineRunner",
+        "type": "inherits_or_implements"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/PaymentRepository.java",
+        "source": "PaymentRepository",
+        "target": "JpaRepository",
+        "type": "inherits_or_implements"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+        "source": "ProductRepository",
+        "target": "JpaRepository",
+        "type": "inherits_or_implements"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/TransactionItemRepository.java",
+        "source": "TransactionItemRepository",
+        "target": "JpaRepository",
+        "type": "inherits_or_implements"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+        "source": "TransactionRepository",
+        "target": "JpaRepository",
+        "type": "inherits_or_implements"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+        "source": "QuotationSeeder",
+        "target": "CommandLineRunner",
+        "type": "inherits_or_implements"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+        "source": "QuotationItemRepository",
+        "target": "JpaRepository",
+        "type": "inherits_or_implements"
+      }
+    ],
+    "routes": [
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "framework": "Spring-like",
+        "handler": "RequestMapping",
+        "method": "ANY",
+        "path": "/api/products"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "framework": "Spring-like",
+        "handler": "GetMapping",
+        "method": "GET",
+        "path": "/search"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+        "framework": "Spring-like",
+        "handler": "GetMapping",
+        "method": "GET",
+        "path": "/barcode/{barcode}"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "framework": "Spring-like",
+        "handler": "RequestMapping",
+        "method": "ANY",
+        "path": "/api/transactions"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "framework": "Spring-like",
+        "handler": "GetMapping",
+        "method": "GET",
+        "path": "/active"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "framework": "Spring-like",
+        "handler": "PostMapping",
+        "method": "POST",
+        "path": "/items"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "framework": "Spring-like",
+        "handler": "PutMapping",
+        "method": "PUT",
+        "path": "/items/{itemId}"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "framework": "Spring-like",
+        "handler": "DeleteMapping",
+        "method": "DELETE",
+        "path": "/items/{itemId}"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "framework": "Spring-like",
+        "handler": "PostMapping",
+        "method": "POST",
+        "path": "/suspend"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "framework": "Spring-like",
+        "handler": "GetMapping",
+        "method": "GET",
+        "path": "/suspended"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "framework": "Spring-like",
+        "handler": "PostMapping",
+        "method": "POST",
+        "path": "/resume/{id}"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "framework": "Spring-like",
+        "handler": "PostMapping",
+        "method": "POST",
+        "path": "/abandon"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "framework": "Spring-like",
+        "handler": "PostMapping",
+        "method": "POST",
+        "path": "/pay"
+      },
+      {
+        "evidence": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "file": "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+        "framework": "Spring-like",
+        "handler": "PostMapping",
+        "method": "POST",
+        "path": "/invoice"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "file": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "framework": "Spring-like",
+        "handler": "RequestMapping",
+        "method": "ANY",
+        "path": "/api/quotation"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "file": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "framework": "Spring-like",
+        "handler": "GetMapping",
+        "method": "GET",
+        "path": "/barcode/{barcode}"
+      },
+      {
+        "evidence": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "file": "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+        "framework": "Spring-like",
+        "handler": "GetMapping",
+        "method": "GET",
+        "path": "/search"
+      }
+    ],
+    "schema_files": []
+  },
+  "delta": {
+    "added": [
+      "Quotation/pom.xml",
+      "Quotation/src/main/java/com/quotation/api/QuotationApiApplication.java",
+      "Quotation/src/main/java/com/quotation/api/config/CorsConfig.java",
+      "Quotation/src/main/java/com/quotation/api/config/QuotationSeeder.java",
+      "Quotation/src/main/java/com/quotation/api/controller/QuotationController.java",
+      "Quotation/src/main/java/com/quotation/api/model/QuotationItem.java",
+      "Quotation/src/main/java/com/quotation/api/repository/QuotationItemRepository.java",
+      "Quotation/src/main/java/com/quotation/api/service/QuotationService.java",
+      "Quotation/src/test/java/com/quotation/api/controller/QuotationControllerTest.java",
+      "Quotation/src/test/java/com/quotation/api/service/QuotationServiceTest.java",
+      "backend/pom.xml",
+      "backend/src/main/java/com/omnistore/mockui/MockOmnistoreUiApplication.java",
+      "backend/src/main/java/com/omnistore/mockui/config/CorsConfig.java",
+      "backend/src/main/java/com/omnistore/mockui/config/DatabaseSeeder.java",
+      "backend/src/main/java/com/omnistore/mockui/config/QuotationClientConfig.java",
+      "backend/src/main/java/com/omnistore/mockui/controller/ProductController.java",
+      "backend/src/main/java/com/omnistore/mockui/controller/TransactionController.java",
+      "backend/src/main/java/com/omnistore/mockui/model/Payment.java",
+      "backend/src/main/java/com/omnistore/mockui/model/PaymentMethod.java",
+      "backend/src/main/java/com/omnistore/mockui/model/Product.java",
+      "backend/src/main/java/com/omnistore/mockui/model/QuotationResponse.java",
+      "backend/src/main/java/com/omnistore/mockui/model/Transaction.java",
+      "backend/src/main/java/com/omnistore/mockui/model/TransactionItem.java",
+      "backend/src/main/java/com/omnistore/mockui/model/TransactionStatus.java",
+      "backend/src/main/java/com/omnistore/mockui/repository/PaymentRepository.java",
+      "backend/src/main/java/com/omnistore/mockui/repository/ProductRepository.java",
+      "backend/src/main/java/com/omnistore/mockui/repository/TransactionItemRepository.java",
+      "backend/src/main/java/com/omnistore/mockui/repository/TransactionRepository.java",
+      "backend/src/main/java/com/omnistore/mockui/service/ProductService.java",
+      "backend/src/main/java/com/omnistore/mockui/service/TransactionService.java",
+      "backend/src/test/java/com/omnistore/mockui/ProductServiceTest.java",
+      "backend/src/test/java/com/omnistore/mockui/TransactionServiceTest.java",
+      "backend/src/test/java/com/omnistore/mockui/controller/ProductControllerTest.java",
+      "backend/src/test/java/com/omnistore/mockui/controller/TransactionControllerTest.java",
+      "frontend/angular.json",
+      "frontend/package.json",
+      "frontend/src/app/app.config.ts",
+      "frontend/src/app/app.routes.ts",
+      "frontend/src/app/app.spec.ts",
+      "frontend/src/app/app.ts",
+      "frontend/src/app/transaction.service.spec.ts",
+      "frontend/src/app/transaction.service.ts",
+      "frontend/src/main.ts",
+      "frontend/tsconfig.app.json",
+      "frontend/tsconfig.json",
+      "frontend/tsconfig.spec.json"
+    ],
+    "modified": [],
+    "removed": [],
+    "summary": {
+      "added": 46,
+      "force": false,
+      "modified": 0,
+      "removed": 0,
+      "unchanged": 0
+    },
+    "unchanged": []
+  },
+  "notes": [
+    "Generated by incremental static analysis.",
+    "Unchanged files were reused from cache.",
+    "Runtime dependency injection and dynamic behavior may need manual verification."
+  ],
+  "repository": "C:\\Users\\AyushDey\\Desktop\\Mock-Omnistore",
+  "schema_version": "5.0",
+  "summary": {
+    "class_count": 39,
+    "dependency_count": 15,
+    "entity_count": 6,
+    "module_count": 46,
+    "relationship_count": 7,
+    "route_count": 17
+  },
+  "technology": {
+    "build_files": [
+      {
+        "file": "backend/pom.xml",
+        "type": "pom.xml"
+      },
+      {
+        "file": "frontend/package.json",
+        "type": "package.json"
+      },
+      {
+        "file": "Quotation/pom.xml",
+        "type": "pom.xml"
+      }
+    ],
+    "languages": {
+      "Java": 32,
+      "TypeScript": 7
+    }
+  }
+}

@@ -1,8 +1,9 @@
-import { Component, OnInit, signal, computed, inject, effect } from '@angular/core';
+import { Component, OnInit, signal, computed, inject, effect, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DecimalPipe, DatePipe } from '@angular/common';
 import { TransactionService, Product, TransactionItem } from './transaction.service';
-import { take } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
+import { take, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 interface Toast {
   id: number;
@@ -105,7 +106,8 @@ export class App implements OnInit {
   readonly showSearchDropdown = signal<boolean>(false);
 
   // Keypads & Modals
-  readonly activeModal = signal<string | null>(null); // 'CASH' | 'CARD' | 'ONEY' | 'GIFT_CARD' | 'VOUCHER' | 'CLIENT' | 'PIN' | 'SUSPENDED' | 'DOCUMENT'
+  readonly activeModal = signal<string | null>(null); // 'CASH' | 'CARD' | 'ONEY' | 'GIFT_CARD' | 'VOUCHER' | 'CLIENT' | 'PIN' | 'SUSPENDED' | 'DOCUMENT' | 'PRICE_CHANGED'
+  readonly priceChangeDetails = signal<{ productName: string, barcode: string, oldPrice: number, newPrice: number } | null>(null);
   readonly pinBuffer = signal<string>('');
   readonly pinError = signal<boolean>(false);
   
@@ -130,6 +132,7 @@ export class App implements OnInit {
   // Toasts
   readonly toasts = signal<Toast[]>([]);
   private toastIdCounter = 0;
+  private readonly searchTerms = new Subject<string>();
 
   constructor() {
     // Ticker for header time
@@ -149,11 +152,42 @@ export class App implements OnInit {
         }
       }
     });
+
+    // Watch active transaction to automatically pop up price update modal on any change (e.g. quantity adjustment)
+    effect(() => {
+      const activeTx = this.transactionService.activeTransaction();
+      if (activeTx) {
+        this.checkForPriceChange(activeTx);
+      }
+    }, { allowSignalWrites: true });
   }
 
   ngOnInit(): void {
     // Load default transaction on boot
     this.transactionService.loadActiveTransaction();
+
+    // Set up debounced search autocomplete
+    this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string) => {
+        if (term.length >= 3) {
+          return this.transactionService.searchProducts(term);
+        } else {
+          return of([]);
+        }
+      })
+    ).subscribe({
+      next: (products) => {
+        if (this.searchQuery().trim().length >= 3) {
+          this.searchResults.set(products);
+          this.showSearchDropdown.set(true);
+        } else {
+          this.searchResults.set([]);
+          this.showSearchDropdown.set(false);
+        }
+      }
+    });
   }
 
   // Toast System
@@ -170,17 +204,36 @@ export class App implements OnInit {
   // Scan or Search execution
   onSearchInput(): void {
     const query = this.searchQuery().trim();
-    if (query.length >= 3) {
-      this.transactionService.searchProducts(query).subscribe({
-        next: (products) => {
-          this.searchResults.set(products);
-          this.showSearchDropdown.set(true);
-        }
-      });
-    } else {
+    if (query.length < 3) {
       this.searchResults.set([]);
       this.showSearchDropdown.set(false);
+      this.searchTerms.next('');
+    } else {
+      this.searchTerms.next(query);
     }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.search-bar-wrapper') && !target.closest('.search-dropdown')) {
+      this.showSearchDropdown.set(false);
+    }
+  }
+
+  private checkForPriceChange(tx: any): boolean {
+    const changedItem = tx.items?.find((item: any) => item.priceChanged);
+    if (changedItem) {
+      this.priceChangeDetails.set({
+        productName: changedItem.product.name,
+        barcode: changedItem.product.barcode,
+        oldPrice: changedItem.oldPrice,
+        newPrice: changedItem.price
+      });
+      this.activeModal.set('PRICE_CHANGED');
+      return true;
+    }
+    return false;
   }
 
   onSearchSubmit(event?: Event): void {
@@ -193,8 +246,10 @@ export class App implements OnInit {
 
     // 1. Try to scan as barcode
     this.transactionService.scanAndAddItem(query).pipe(take(1)).subscribe({
-      next: () => {
-        this.showToast('Article ajouté au panier !');
+      next: (tx) => {
+        if (!this.checkForPriceChange(tx)) {
+          this.showToast('Article ajouté au panier !');
+        }
       },
       error: () => {
         // 2. Barcode not found, search as name
@@ -219,9 +274,12 @@ export class App implements OnInit {
     this.showSearchDropdown.set(false);
     this.searchQuery.set('');
     this.transactionService.scanAndAddItem(product.barcode).pipe(take(1)).subscribe({
-      next: () => {
-        this.showToast(`${product.name} ajouté !`);
-      }
+      next: (tx) => {
+        if (!this.checkForPriceChange(tx)) {
+          this.showToast(`${product.name} ajouté !`);
+        }
+      },
+      error: (err) => this.showToast(`Erreur d'ajout: ${err.message || err}`, 'error')
     });
   }
 
@@ -430,9 +488,12 @@ export class App implements OnInit {
 
   addLookupItemToCart(product: Product): void {
     this.transactionService.scanAndAddItem(product.barcode).pipe(take(1)).subscribe({
-      next: () => {
-        this.showToast(`${product.name} ajouté au panier !`);
-      }
+      next: (tx) => {
+        if (!this.checkForPriceChange(tx)) {
+          this.showToast(`${product.name} ajouté au panier !`);
+        }
+      },
+      error: (err) => this.showToast(`Erreur d'ajout: ${err.message || err}`, 'error')
     });
   }
 
@@ -777,6 +838,7 @@ export class App implements OnInit {
     this.cashReceivedInput.set('');
     this.cashChangeDue.set(0);
     this.cardSimState.set('IDLE');
+    this.priceChangeDetails.set(null);
   }
 
   printCurrentDocument(): void {
